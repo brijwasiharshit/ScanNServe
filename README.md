@@ -11,3 +11,6 @@ Domain -> This is the package that will contain two different packages. First on
 Dto -> This is the DTO Layer where the format of request and response will be defined.
 Service -> This is the service layer where all the business Logic will be written.
 Transformer -> This is the transformer layer where convertion of Dto to entity and entity to Dto will take place because all after the service layer, resository will work only on entities not in Dto's.
+Utils -> This is the package that will contain all the utility functions that will be required in the project.
+        Inside this project, there will be directory message constant which will store the message constants that will be required throughout the proejct.
+Most directories will have a contract defined using Inteface which will be implemented in the implenetation directory of that particular layer.
