@@ -13,7 +13,6 @@ import java.util.List;
 
 public interface ISuperAdminController {
 
-    ResponseEntity<StandardResponse<UserResponseDTO>> createSuperAdmin(@RequestBody UserRequestDTO userRequestDTO);
 
     String getAllAdmins();
 
