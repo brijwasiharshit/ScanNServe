@@ -32,4 +32,7 @@ public class WifiEntity {
 
     private String hashedPassword;
 
+    private String coverage;
+
+
 }

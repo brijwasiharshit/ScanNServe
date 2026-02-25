@@ -16,8 +16,8 @@ public enum Role {
             Permissions.DELETE_ITEM,
             Permissions.CREATE_CATEGORY,
             Permissions.UPDATE_CATEGORY,
-            Permissions.DELETE_CATEGORY
-
+            Permissions.DELETE_CATEGORY,
+            Permissions.CREATE_WIFI
     )),
 
     ADMIN(Set.of(

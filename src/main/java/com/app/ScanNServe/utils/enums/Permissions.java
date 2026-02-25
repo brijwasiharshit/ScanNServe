@@ -18,7 +18,8 @@ public enum Permissions {
     CREATE_CATEGORY,
     UPDATE_CATEGORY,
     DELETE_CATEGORY,
-    ADD_CATEGORY
+    ADD_CATEGORY,
 
+    CREATE_WIFI
 
 }
