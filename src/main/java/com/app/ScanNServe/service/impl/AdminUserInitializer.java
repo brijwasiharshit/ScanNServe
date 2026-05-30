@@ -37,12 +37,12 @@ public class AdminUserInitializer implements CommandLineRunner {
         );
     }
 
-    private void createUserIfNotExists(String email, String name, Role role) {
+    private void createUserIfNotExists(String email, String username, Role role) {
 
-        if (userRepository.findByName(name).isEmpty()) {
+        if (userRepository.findByUsernameAndEmailAddress(username, email).isEmpty()) {
 
             UserEntity user = new UserEntity();
-            user.setName(name);
+            user.setUsername(username);
             user.setEmailAddress(email);
             user.setHashedPassword(passwordEncoder.encode("Password@123"));
             user.setRole(role);

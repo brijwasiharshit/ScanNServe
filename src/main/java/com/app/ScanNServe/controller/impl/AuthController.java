@@ -1,9 +1,9 @@
 package com.app.ScanNServe.controller.impl;
 
+import com.app.ScanNServe.controller.IAuthController;
 import com.app.ScanNServe.domain.entity.AuthRequest;
 import com.app.ScanNServe.utils.jwt.JWTUtil;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/super")
 @Data
-public class AuthController {
+public class AuthController implements IAuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
     @PostMapping("/authenticate")
+    @Override
     public String generateToken(@RequestBody AuthRequest authRequest){
         try{
             System.out.println("Inside Auth Controller!");

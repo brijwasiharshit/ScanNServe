@@ -1,6 +1,8 @@
 package com.app.ScanNServe.controller;
 
+import com.app.ScanNServe.dto.request.PropertyRequestDTO;
 import com.app.ScanNServe.dto.request.UserRequestDTO;
+import com.app.ScanNServe.dto.response.PropertyResponseDTO;
 import com.app.ScanNServe.dto.response.UserResponseDTO;
 import com.app.ScanNServe.utils.api.StandardResponse;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +35,7 @@ public interface ISuperAdminController {
     ResponseEntity<StandardResponse<Void>> deleteAdmin(
             @PathVariable Long id
     );
-
-
-
-
-
-
-
+    ResponseEntity<StandardResponse<PropertyResponseDTO>> createProperty(
+            @RequestBody PropertyRequestDTO propertyRequestDTO
+    );
 }

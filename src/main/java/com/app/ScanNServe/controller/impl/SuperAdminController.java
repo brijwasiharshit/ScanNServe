@@ -1,18 +1,18 @@
 package com.app.ScanNServe.controller.impl;
 
 import com.app.ScanNServe.controller.ISuperAdminController;
+import com.app.ScanNServe.dto.request.PropertyRequestDTO;
 import com.app.ScanNServe.dto.request.UserRequestDTO;
+import com.app.ScanNServe.dto.response.PropertyResponseDTO;
 import com.app.ScanNServe.dto.response.UserResponseDTO;
 import com.app.ScanNServe.service.IManageAdminService;
+import com.app.ScanNServe.service.IPropertyService;
 import com.app.ScanNServe.utils.api.StandardResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/super")
 @AllArgsConstructor
 public class SuperAdminController implements ISuperAdminController {
-
+    private final IPropertyService propertyService;
     private final IManageAdminService manageAdminService;
     public ResponseEntity<StandardResponse<UserResponseDTO>> createSuperAdmin(UserRequestDTO userRequestDTO) {
         UserResponseDTO userResponseDTO = manageAdminService.createSuperAdmin(userRequestDTO);
@@ -68,5 +68,25 @@ public class SuperAdminController implements ISuperAdminController {
     @Override
     public ResponseEntity<StandardResponse<Void>> deleteAdmin(Long id) {
         return null;
+    }
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/create")
+    @Override
+    public ResponseEntity<StandardResponse<PropertyResponseDTO>> createProperty(
+            @RequestBody PropertyRequestDTO propertyRequestDTO
+    ) {
+        PropertyResponseDTO propertyResponseDTO = propertyService.createProperty(propertyRequestDTO);
+
+        StandardResponse<PropertyResponseDTO> response =
+                StandardResponse.<PropertyResponseDTO>builder()
+                        .data(propertyResponseDTO)
+                        .success(true)
+                        .message("Property created successfully")
+                        .errors(null)
+                        .httpStatus(HttpStatus.CREATED)
+                        .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

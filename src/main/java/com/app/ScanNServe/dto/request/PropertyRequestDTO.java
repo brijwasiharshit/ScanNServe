@@ -11,6 +11,6 @@ public class PropertyRequestDTO {
     private String name;
     private String description;
     private String address;
+    private String logoLink;
 //    private List<String> gallery;
-    private String wifiIdFk;
 }

@@ -13,6 +13,9 @@ import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Data
 public class WifiService implements IWifiService {
@@ -24,6 +27,8 @@ public class WifiService implements IWifiService {
 
     @Override
     public WifiResponseDTO createWifi(WifiRequestDTO wifiRequestDTO) {
+
+        ValidateWifi.validateSsid(wifiRequestDTO.getSSID());
 
         String password = wifiRequestDTO.getPassword();
         String confirmPassword = wifiRequestDTO.getConfPassword();
@@ -56,6 +61,21 @@ public class WifiService implements IWifiService {
                 .orElseThrow(() -> new IllegalArgumentException("Wifi details not found for coverage: " + coverageArea));
 
         return wifiTransformer.toDto(wifiEntity);
+    }
+
+    @Override
+    public List<WifiResponseDTO> getWifiByProperty(WifiRequestDTO wifiRequestDTO) {
+
+        Long propertyId = Long.parseLong(wifiRequestDTO.getPropertyIdFk());
+
+        PropertyEntity property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new IllegalArgumentException("Property not found with id: " + propertyId));
+
+        List<WifiEntity> wifiEntities = wifiRepository.findByProperty(property);
+
+        return wifiEntities.stream()
+                .map(wifiTransformer::toDto)
+                .collect(Collectors.toList());
     }
 }
 

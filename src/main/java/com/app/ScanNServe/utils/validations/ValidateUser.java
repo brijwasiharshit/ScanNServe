@@ -20,7 +20,7 @@ public class ValidateUser {
             String email,
             String password,
             String confirmPassword,
-            String name,
+            String username,
             String role,
             String contactNumber
     ) {
@@ -43,9 +43,9 @@ public class ValidateUser {
             throw new IllegalArgumentException("Passwords do not match");
         }
 
-        // Name validation
-        if (name == null || name.isBlank() || !NAME_PATTERN.matcher(name).matches()) {
-            throw new IllegalArgumentException("Name must contain only alphabets and be at least 2 characters long");
+        // Username validation
+        if (username == null || username.isBlank() || !NAME_PATTERN.matcher(username).matches()) {
+            throw new IllegalArgumentException("Username must contain only alphabets and be at least 2 characters long");
         }
 
         // Role validation

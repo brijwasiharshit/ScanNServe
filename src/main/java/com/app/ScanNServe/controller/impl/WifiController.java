@@ -1,5 +1,6 @@
 package com.app.ScanNServe.controller.impl;
 
+import com.app.ScanNServe.controller.IWifiController;
 import com.app.ScanNServe.dto.request.WifiRequestDTO;
 import com.app.ScanNServe.dto.response.WifiResponseDTO;
 import com.app.ScanNServe.service.IWifiService;
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/wifi")
 @AllArgsConstructor
-public class WifiController {
+public class WifiController implements IWifiController {
 
     private final IWifiService wifiService;
 
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping("/create")
+    @Override
     public ResponseEntity<StandardResponse<WifiResponseDTO>> createWifi(@RequestBody WifiRequestDTO wifiRequestDTO) {
-
+        System.out.println("Inside create Wifi by Super Admin!");
         WifiResponseDTO wifiResponseDTO = wifiService.createWifi(wifiRequestDTO);
 
         StandardResponse<WifiResponseDTO> response =
@@ -39,6 +43,7 @@ public class WifiController {
     }
 
     @PostMapping("/details")
+    @Override
     public ResponseEntity<StandardResponse<WifiResponseDTO>> getWifiDetails(@RequestBody WifiRequestDTO wifiRequestDTO) {
 
         WifiResponseDTO wifiResponseDTO = wifiService.getWifiDetails(wifiRequestDTO);
@@ -48,6 +53,25 @@ public class WifiController {
                         .data(wifiResponseDTO)
                         .success(true)
                         .message("Wifi details fetched successfully")
+                        .errors(null)
+                        .httpStatus(HttpStatus.OK)
+                        .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/by-property")
+    @Override
+    public ResponseEntity<StandardResponse<List<WifiResponseDTO>>> getWifiByProperty(
+            @RequestBody WifiRequestDTO wifiRequestDTO
+    ) {
+        List<WifiResponseDTO> wifiResponseDTOS = wifiService.getWifiByProperty(wifiRequestDTO);
+
+        StandardResponse<List<WifiResponseDTO>> response =
+                StandardResponse.<List<WifiResponseDTO>>builder()
+                        .data(wifiResponseDTOS)
+                        .success(true)
+                        .message("Wifi list fetched successfully")
                         .errors(null)
                         .httpStatus(HttpStatus.OK)
                         .build();

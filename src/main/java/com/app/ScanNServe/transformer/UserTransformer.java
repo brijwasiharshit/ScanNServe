@@ -10,18 +10,19 @@ import org.springframework.stereotype.Component;
 public class UserTransformer {
     public UserEntity toEntity(UserRequestDTO d, String hashedPassword) {
         UserEntity e = new UserEntity();
-        e.setName(d.getName());
+        e.setUsername(d.getUsername());
+        e.setEmailAddress(d.getEmailAddress());
         e.setRole(d.getRole());
         e.setPropertyIdFk(d.getPropertyIdFk());
         e.setAddress(d.getAddress());
-        e.setEmailAddress(d.getEmailAddress());
         e.setContactNumber(d.getContactNumber());
         e.setHashedPassword(hashedPassword);
-    return e;
+        return e;
     }
-    public UserRequestDTO toDto(UserEntity e){
+
+    public UserRequestDTO toDto(UserEntity e) {
         UserRequestDTO d = new UserRequestDTO();
-        d.setName(e.getName());
+        d.setUsername(e.getUsername());
         d.setRole(e.getRole());
         d.setPropertyIdFk(e.getPropertyIdFk());
         d.setAddress(e.getAddress());

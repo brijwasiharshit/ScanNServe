@@ -7,13 +7,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -31,20 +27,20 @@ public class PropertyEntity {
     @Column(length = 256, nullable = false)
     private String name;
 
-    @Column(name = "description", length = 1024)
+    @Column(name = "description", length = 512)
     private String desc;
 
-    @Column(length = 2048)
+    @Column(length = 1024)
     private String address;
 
     @Column(name = "logo_link", length = 2048)
     private String logoLink;
 
-    @OneToMany(
+  /*  @OneToMany(
             mappedBy = "property",
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<WifiEntity> wifis;
+    private List<WifiEntity> wifis;*/
 }

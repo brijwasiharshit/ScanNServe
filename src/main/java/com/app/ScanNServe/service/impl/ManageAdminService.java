@@ -20,7 +20,7 @@ public class ManageAdminService implements IManageAdminService {
 
     @Override
     public UserResponseDTO createSuperAdmin(UserRequestDTO userRequestDTO) {
-        var name=  userRequestDTO.getName();
+        var username = userRequestDTO.getUsername();
         var email = userRequestDTO.getEmailAddress();
         var password = userRequestDTO.getPassword();
         var confirmPassword = userRequestDTO.getConfirmPassword();
@@ -28,9 +28,11 @@ public class ManageAdminService implements IManageAdminService {
         var contactNumber = userRequestDTO.getContactNumber();
         String role = String.valueOf(userRequestDTO.getRole());
         //validate if details entered are valid
-        ValidateUser.validate(email,password,confirmPassword,name,address,contactNumber);
+        ValidateUser.validate(email, password, confirmPassword, username, role, contactNumber);
         //validate if super-admin doesn't already exists
-        UserEntity e = userRespository.findByRole(role);
+        userRespository.findByUsernameAndEmailAddress(username, email)
+                .ifPresent(u -> { throw new IllegalArgumentException("User already exists with this username and email"); });
+        UserEntity e = userRespository.findFirstByRole(com.app.ScanNServe.utils.enums.Role.valueOf(role)).orElse(null);
       return null;
         //generate hashedPassword
 
