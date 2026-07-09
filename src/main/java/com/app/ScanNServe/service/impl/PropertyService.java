@@ -20,12 +20,10 @@ public class PropertyService implements IPropertyService {
     @Override
     public PropertyResponseDTO createProperty(PropertyRequestDTO propertyRequestDTO) {
         String normalizedName = normalizeName(propertyRequestDTO.getName());
-
-        if (propertyExists(normalizedName)) {
+        String actualName = propertyRequestDTO.getName();
+        if (propertyExists(normalizedName,actualName)) {
             throw new IllegalArgumentException("Property with the given name already exists");
         }
-
-        propertyRequestDTO.setName(normalizedName);
 
         ValidateProperty.validateProperty(
                 normalizedName,
@@ -41,12 +39,12 @@ public class PropertyService implements IPropertyService {
         return propertyTransformer.toDto(saved);
     }
 
-    private boolean propertyExists(String name) {
-        return propertyRepository.existsByName(name);
+    private boolean propertyExists(String normalizedName, String actualName) {
+        return propertyRepository.existsByName(actualName);
     }
 
     private String normalizeName(String name) {
-        return name == null ? null : name.trim();
+        return name == null ? null : name.trim().toLowerCase();
     }
 
 }

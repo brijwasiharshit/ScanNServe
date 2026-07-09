@@ -13,7 +13,6 @@ public class UserTransformer {
         e.setUsername(d.getUsername());
         e.setEmailAddress(d.getEmailAddress());
         e.setRole(d.getRole());
-        e.setPropertyIdFk(d.getPropertyIdFk());
         e.setAddress(d.getAddress());
         e.setContactNumber(d.getContactNumber());
         e.setHashedPassword(hashedPassword);
@@ -24,7 +23,6 @@ public class UserTransformer {
         UserRequestDTO d = new UserRequestDTO();
         d.setUsername(e.getUsername());
         d.setRole(e.getRole());
-        d.setPropertyIdFk(e.getPropertyIdFk());
         d.setAddress(e.getAddress());
         d.setEmailAddress(e.getEmailAddress());
         d.setContactNumber(e.getContactNumber());
