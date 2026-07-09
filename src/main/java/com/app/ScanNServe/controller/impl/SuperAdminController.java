@@ -7,6 +7,7 @@ import com.app.ScanNServe.dto.response.PropertyResponseDTO;
 import com.app.ScanNServe.dto.response.UserResponseDTO;
 import com.app.ScanNServe.service.IManageAdminService;
 import com.app.ScanNServe.service.IPropertyService;
+import com.app.ScanNServe.service.IUserService;
 import com.app.ScanNServe.utils.api.StandardResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequestMapping("/api/v1/super")
 @AllArgsConstructor
 public class SuperAdminController implements ISuperAdminController {
+
+    private final IUserService userService;
     private final IPropertyService propertyService;
     private final IManageAdminService manageAdminService;
     public ResponseEntity<StandardResponse<UserResponseDTO>> createSuperAdmin(UserRequestDTO userRequestDTO) {
@@ -56,8 +59,15 @@ public class SuperAdminController implements ISuperAdminController {
     @Override
     @PostMapping("/create-admin")
     public ResponseEntity<StandardResponse<UserResponseDTO>> createAdmin(UserRequestDTO requestDto) {
-        System.out.println("Inside create Admin!");
-        return null;
+         UserResponseDTO userResponseDTO =   userService.createAdmin(requestDto);
+        StandardResponse<UserResponseDTO> response =
+                StandardResponse.<UserResponseDTO>builder()
+                        .data(userResponseDTO)
+                        .success(true)
+                        .message("User Created Successfully!")
+                        .httpStatus(HttpStatus.CREATED)
+                        .build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Override
@@ -70,8 +80,8 @@ public class SuperAdminController implements ISuperAdminController {
         return null;
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/create-property")
     @Override
     public ResponseEntity<StandardResponse<PropertyResponseDTO>> createProperty(
             @RequestBody PropertyRequestDTO propertyRequestDTO
@@ -89,4 +99,5 @@ public class SuperAdminController implements ISuperAdminController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 }

@@ -21,6 +21,7 @@ public enum Role {
     )),
 
     ADMIN(Set.of(
+            Permissions.CREATE_PROPERTY,
             Permissions.UPDATE_PROPERTY,
             Permissions.DELETE_PROPERTY,
             Permissions.ADD_ITEM,

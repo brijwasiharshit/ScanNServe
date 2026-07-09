@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertyTransformer {
 
-    public PropertyEntity toEntity(PropertyRequestDTO d) {
+    public PropertyEntity toEntity(PropertyRequestDTO d, Long adminId) {
         PropertyEntity e = new PropertyEntity();
         e.setName(d.getName());
         e.setDesc(d.getDescription());
         e.setAddress(d.getAddress());
         e.setLogoLink(d.getLogoLink());
+        e.setAdminFk(adminId);
         return e;
     }
 

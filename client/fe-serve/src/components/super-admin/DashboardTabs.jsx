@@ -1,0 +1,25 @@
+const tabs = [
+    { id: "admins", label: "Admins" },
+    { id: "food", label: "Food Items" },
+];
+
+export default function DashboardTabs({ activeTab, onTabChange }) {
+    return (
+        <div className="mt-8 flex gap-6 border-b border-slate-200">
+            {tabs.map((tab) => (
+                <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => onTabChange(tab.id)}
+                    className={`pb-3 font-medium ${
+                        activeTab === tab.id
+                            ? "border-b-2 border-[#F59E0B] text-[#0891B2]"
+                            : "text-slate-500"
+                    }`}
+                >
+                    {tab.label}
+                </button>
+            ))}
+        </div>
+    );
+}

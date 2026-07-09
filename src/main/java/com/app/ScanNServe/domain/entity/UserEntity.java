@@ -39,8 +39,7 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false, length = 20)
     private Role role;
 
-    @Column(name = "property_id_fk", nullable = false)
-    private Long propertyIdFk;
+
 
     @Column(name = "address", length = 2048)
     private String address;

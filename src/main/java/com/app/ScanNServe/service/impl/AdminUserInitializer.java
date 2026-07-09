@@ -46,7 +46,6 @@ public class AdminUserInitializer implements CommandLineRunner {
             user.setEmailAddress(email);
             user.setHashedPassword(passwordEncoder.encode("Password@123"));
             user.setRole(role);
-            user.setPropertyIdFk(0L);
             user.setContactNumber("9999999999");
             user.setAddress("Default Address");
 

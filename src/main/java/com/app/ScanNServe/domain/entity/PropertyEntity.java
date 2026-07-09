@@ -24,7 +24,7 @@ public class PropertyEntity {
     )
     private Long id;
 
-    @Column(length = 256, nullable = false)
+    @Column(length = 256, nullable = false, unique = true)
     private String name;
 
     @Column(name = "description", length = 512)
@@ -35,6 +35,9 @@ public class PropertyEntity {
 
     @Column(name = "logo_link", length = 2048)
     private String logoLink;
+
+    @Column(name = "adminFk")
+    private Long adminFk;
 
   /*  @OneToMany(
             mappedBy = "property",
