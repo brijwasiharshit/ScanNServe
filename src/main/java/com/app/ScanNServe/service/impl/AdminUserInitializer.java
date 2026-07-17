@@ -18,40 +18,29 @@ public class AdminUserInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        createUserIfNotExists(
-                "superadmin@scannserve.com",
-                "Super Admin",
-                Role.SUPER_ADMIN
-        );
+        createSuperAdminIfNotExists();
 
-        createUserIfNotExists(
-                "admin@scannserve.com",
-                "Admin User",
-                Role.ADMIN
-        );
-
-        createUserIfNotExists(
-                "user@scannserve.com",
-                "Normal User",
-                Role.USER
-        );
     }
 
-    private void createUserIfNotExists(String email, String username, Role role) {
+    private void createSuperAdminIfNotExists() {
 
-        if (userRepository.findByUsernameAndEmailAddress(username, email).isEmpty()) {
+        String email = "superadmin@scannserve.com";
+
+        if (userRepository.findByEmailAddress(email).isEmpty()) {
 
             UserEntity user = new UserEntity();
-            user.setUsername(username);
+
+            user.setUsername("Super Admin");
             user.setEmailAddress(email);
             user.setHashedPassword(passwordEncoder.encode("Password@123"));
-            user.setRole(role);
+            user.setRole(Role.SUPER_ADMIN);
             user.setContactNumber("9999999999");
-            user.setAddress("Default Address");
+            user.setAddress("System");
+            user.setRestaurant(null);
 
             userRepository.save(user);
 
-            System.out.println("✅ Created default user: " + role.name());
+            System.out.println("✅ Super Admin created successfully.");
         }
     }
 }

@@ -14,3 +14,9 @@ export const clearAuth = () => {
 
 export const getAccessToken = () =>
     localStorage.getItem("accessToken");
+
+export const getRole = () =>
+    localStorage.getItem("role");
+
+export const getUserId = () =>
+    localStorage.getItem("userId");

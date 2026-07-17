@@ -13,7 +13,7 @@ export default function InputField({
                 </span>
             )}
 
-            <span className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-[#0891B2]">
+            <span className="flex items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 focus-within:border-[#F97316]">
                 {Icon && <Icon size={18} className="text-slate-400" />}
 
                 <input

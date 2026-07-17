@@ -1,16 +1,22 @@
 package com.app.ScanNServe.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "food_category")
 public class FoodCategoryEntity {
 
@@ -21,9 +27,21 @@ public class FoodCategoryEntity {
             sequenceName = "food_category_seq",
             allocationSize = 50
     )
-    private Long id;
+    @Column(name = "category_id")
+    private Long categoryId;
 
-    @Column(name = "name", length = 100, nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
-}
 
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Builder.Default
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+}

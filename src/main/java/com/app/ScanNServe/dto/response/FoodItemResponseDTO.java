@@ -1,13 +1,30 @@
 package com.app.ScanNServe.dto.response;
 
-import lombok.Data;
+import com.app.ScanNServe.utils.enums.FoodType;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FoodItemResponseDTO {
-    private Long id;
-    private String name;
-    private String imgLink;
-    private Boolean isVeg;
-    private String categoryName;
-}
 
+    private Long itemId;
+
+    private Long categoryId;
+
+    private String categoryName;
+
+    private String name;
+
+    private FoodType foodType;
+
+    private String defaultImage;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+}

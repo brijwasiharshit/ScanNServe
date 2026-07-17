@@ -7,6 +7,10 @@ export default function SuperAdminModals({
     activeModal,
     onClose,
     onPropertyNext,
+    createdRestaurantId,
+    onAdminCreated,
+    categories,
+    onFoodCreated
 }) {
     if (activeModal === "property") {
         return (
@@ -19,7 +23,10 @@ export default function SuperAdminModals({
     if (activeModal === "admin") {
         return (
             <Modal title="Create Admin" onClose={onClose}>
-                <AdminForm />
+                <AdminForm 
+                    restaurantId={createdRestaurantId}
+                    onAdminCreated={onAdminCreated}
+                />
             </Modal>
         );
     }
@@ -27,7 +34,10 @@ export default function SuperAdminModals({
     if (activeModal === "food") {
         return (
             <Modal title="Add Food Item" onClose={onClose}>
-                <FoodForm />
+                <FoodForm 
+                    categories={categories}
+                    onFoodCreated={onFoodCreated}
+                />
             </Modal>
         );
     }

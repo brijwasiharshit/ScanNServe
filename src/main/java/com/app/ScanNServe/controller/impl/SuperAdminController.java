@@ -1,14 +1,20 @@
 package com.app.ScanNServe.controller.impl;
 
 import com.app.ScanNServe.controller.ISuperAdminController;
+import com.app.ScanNServe.dto.request.AdminRequestDTO;
 import com.app.ScanNServe.dto.request.PropertyRequestDTO;
+import com.app.ScanNServe.dto.request.RestaurantRequestDTO;
 import com.app.ScanNServe.dto.request.UserRequestDTO;
+import com.app.ScanNServe.dto.response.AdminResponseDTO;
 import com.app.ScanNServe.dto.response.PropertyResponseDTO;
+import com.app.ScanNServe.dto.response.RestaurantResponseDTO;
 import com.app.ScanNServe.dto.response.UserResponseDTO;
 import com.app.ScanNServe.service.IManageAdminService;
 import com.app.ScanNServe.service.IPropertyService;
+import com.app.ScanNServe.service.IRestaurantService;
 import com.app.ScanNServe.service.IUserService;
 import com.app.ScanNServe.utils.api.StandardResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,82 +28,57 @@ import java.util.List;
 @AllArgsConstructor
 public class SuperAdminController implements ISuperAdminController {
 
+    private final IRestaurantService restaurantService;
     private final IUserService userService;
-    private final IPropertyService propertyService;
-    private final IManageAdminService manageAdminService;
-    public ResponseEntity<StandardResponse<UserResponseDTO>> createSuperAdmin(UserRequestDTO userRequestDTO) {
-        UserResponseDTO userResponseDTO = manageAdminService.createSuperAdmin(userRequestDTO);
-        StandardResponse<UserResponseDTO> response =
-                StandardResponse.<UserResponseDTO>builder()
-                        .data(userResponseDTO)
-                        .success(true)
-                        .message("User Created Successfully!")
-                        .httpStatus(HttpStatus.CREATED)
-                        .build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    @GetMapping("/getAdmin")
-    @Override
-    public String getAllAdmins() {
-        System.out.println("Heyy");
-        return "Hello!";
-    }
-
-    @Override
-    public ResponseEntity<StandardResponse<UserResponseDTO>> getAdminByPropertyName(String name) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<StandardResponse<UserResponseDTO>> getAdminByEmail(String email) {
-        return null;
-    }
-
-
     @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/restaurants")
     @Override
-    @PostMapping("/create-admin")
-    public ResponseEntity<StandardResponse<UserResponseDTO>> createAdmin(UserRequestDTO requestDto) {
-         UserResponseDTO userResponseDTO =   userService.createAdmin(requestDto);
-        StandardResponse<UserResponseDTO> response =
-                StandardResponse.<UserResponseDTO>builder()
-                        .data(userResponseDTO)
-                        .success(true)
-                        .message("User Created Successfully!")
-                        .httpStatus(HttpStatus.CREATED)
-                        .build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    @Override
-    public ResponseEntity<StandardResponse<UserResponseDTO>> updateAdmin(Long id, UserRequestDTO requestDto) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<StandardResponse<Void>> deleteAdmin(Long id) {
-        return null;
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create-property")
-    @Override
-    public ResponseEntity<StandardResponse<PropertyResponseDTO>> createProperty(
-            @RequestBody PropertyRequestDTO propertyRequestDTO
+    public ResponseEntity<StandardResponse<RestaurantResponseDTO>> createRestaurant(
+            @Valid @RequestBody RestaurantRequestDTO requestDTO
     ) {
-        PropertyResponseDTO propertyResponseDTO = propertyService.createProperty(propertyRequestDTO);
 
-        StandardResponse<PropertyResponseDTO> response =
-                StandardResponse.<PropertyResponseDTO>builder()
-                        .data(propertyResponseDTO)
+        RestaurantResponseDTO responseDTO =
+                restaurantService.createRestaurant(requestDTO);
+
+        StandardResponse<RestaurantResponseDTO> response =
+                StandardResponse.<RestaurantResponseDTO>builder()
                         .success(true)
-                        .message("Property created successfully")
+                        .message("Restaurant created successfully")
+                        .data(responseDTO)
                         .errors(null)
                         .httpStatus(HttpStatus.CREATED)
                         .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
+
+
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/admins")
+    @Override
+    public ResponseEntity<StandardResponse<AdminResponseDTO>> createAdmin(
+            @Valid @RequestBody AdminRequestDTO requestDTO
+    ) {
+
+        AdminResponseDTO responseDTO =
+                userService.createAdmin(requestDTO);
+
+        StandardResponse<AdminResponseDTO> response =
+                StandardResponse.<AdminResponseDTO>builder()
+                        .success(true)
+                        .message("Admin created successfully")
+                        .data(responseDTO)
+                        .errors(null)
+                        .httpStatus(HttpStatus.CREATED)
+                        .build();
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
+    }
+
+
 
 }

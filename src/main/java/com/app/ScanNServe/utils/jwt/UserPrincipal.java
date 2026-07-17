@@ -25,11 +25,17 @@ public class UserPrincipal implements UserDetails {
     private String username;
     private String emailAddress;
     private Role role;
+    private Long restaurantId;
     private String password;
 
     public static UserPrincipal fromEntity(UserEntity user) {
         return UserPrincipal.builder()
                 .id(user.getId())
+                .restaurantId(
+                        user.getRestaurant() != null
+                                ? user.getRestaurant().getRestaurantId()
+                                : null
+                )
                 .username(user.getUsername())
                 .emailAddress(user.getEmailAddress())
                 .role(user.getRole())
@@ -40,6 +46,7 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal fromJwtClaims(Claims claims) {
         return UserPrincipal.builder()
                 .id(claims.get("userId", Long.class))
+                .restaurantId(claims.get("restaurantId", Long.class))
                 .username(claims.get("username", String.class))
                 .emailAddress(claims.getSubject())
                 .role(Role.valueOf(claims.get("role", String.class)))

@@ -42,7 +42,11 @@ export default function SuperAdminPage() {
             <SuperAdminModals
                 activeModal={dashboard.activeModal}
                 onClose={dashboard.closeModal}
-                onPropertyNext={dashboard.continueToAdmin}
+                onPropertyNext={dashboard.handlePropertyCreated}
+                createdRestaurantId={dashboard.createdRestaurantId}
+                onAdminCreated={dashboard.handleAdminCreated}
+                categories={dashboard.categories}
+                onFoodCreated={dashboard.handleFoodCreated}
             />
         </div>
     );

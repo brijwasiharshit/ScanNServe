@@ -37,6 +37,12 @@ public class JWTUtil {
                 .claim("userId", user.getId())
                 .claim("username", user.getUsername())
                 .claim("role", user.getRole().name())
+                .claim(
+                        "restaurantId",
+                        user.getRestaurant() != null
+                                ? user.getRestaurant().getRestaurantId()
+                                : null
+                )
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

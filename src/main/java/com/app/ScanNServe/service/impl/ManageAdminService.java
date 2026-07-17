@@ -6,7 +6,7 @@ import com.app.ScanNServe.dto.request.UserRequestDTO;
 import com.app.ScanNServe.dto.response.UserResponseDTO;
 import com.app.ScanNServe.service.IManageAdminService;
 import com.app.ScanNServe.utils.validations.ValidateUser;
-import com.app.ScanNServe.transformer.UserTransformer;
+//import com.app.ScanNServe.transformer.UserTransformer;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class ManageAdminService implements IManageAdminService {
 
     private final IUserRespository userRespository;
 
-    private final UserTransformer userTx;
+//    private final UserTransformer userTx;
 
     @Override
     public UserResponseDTO createSuperAdmin(UserRequestDTO userRequestDTO) {

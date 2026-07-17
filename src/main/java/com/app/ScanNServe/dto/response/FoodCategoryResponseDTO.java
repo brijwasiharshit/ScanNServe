@@ -1,9 +1,25 @@
 package com.app.ScanNServe.dto.response;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FoodCategoryResponseDTO {
-    private Long id;
+
+    private Long categoryId;
+
     private String name;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

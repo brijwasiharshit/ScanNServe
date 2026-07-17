@@ -6,7 +6,7 @@ export default function Header() {
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center gap-3">
-                    <div className="bg-[#0891B2] p-2.5 rounded-xl shadow-md">
+                    <div className="bg-[#F97316] p-2.5 rounded-xl shadow-md">
                         <QrCode className="text-white" size={26} />
                     </div>
 

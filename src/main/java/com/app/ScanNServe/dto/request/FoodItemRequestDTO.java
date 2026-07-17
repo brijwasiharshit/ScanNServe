@@ -1,14 +1,27 @@
 package com.app.ScanNServe.dto.request;
 
-import lombok.Data;
-import org.springframework.stereotype.Component;
+import com.app.ScanNServe.utils.enums.FoodType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-@Component
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 public class FoodItemRequestDTO {
-    private String name;
-    private String imgLink;
-    private Boolean isVeg;
-    private Long foodCategoryIdFk;
-}
 
+    @NotNull(message = "Category Id is required")
+    private Long categoryId;
+
+    @NotBlank(message = "Item name is required")
+    private String name;
+
+    @NotNull
+    private FoodType foodType;
+
+    @NotBlank(message = "Default image URL is required")
+    private String defaultImage;
+}

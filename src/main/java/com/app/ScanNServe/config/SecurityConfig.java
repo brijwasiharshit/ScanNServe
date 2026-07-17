@@ -1,10 +1,10 @@
 package com.app.ScanNServe.config;
 
-
 import com.app.ScanNServe.domain.repository.IUserRespository;
 import com.app.ScanNServe.filters.JwtAuthFilter;
+import com.app.ScanNServe.filters.RestaurantSubscriptionFilter;
 import com.app.ScanNServe.service.impl.CustomUserDetailService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,31 +24,50 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtAuthFilter jwtAuthFilter;
-    private final IUserRespository userRespository;
-     @Bean
+    private final RestaurantSubscriptionFilter restaurantSubscriptionFilter;
+    private final IUserRespository userRepository;
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.
-                cors(Customizer.withDefaults()).
-                csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth ->
-                auth
-                        .requestMatchers("/api/v1/super/authenticate").permitAll().
-                        anyRequest().authenticated())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        ;
+
+        http
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/api/v1/super/authenticate",
+                                "/api/v1/super/refresh",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/api/v1/user/**"
+                        ).permitAll()
+
+                        .anyRequest().authenticated()
+                )
+
+                .addFilterBefore(
+                        jwtAuthFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+
+                .addFilterAfter(
+                        restaurantSubscriptionFilter,
+                        JwtAuthFilter.class
+                );
 
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -57,20 +76,31 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-         return new CustomUserDetailService(userRespository);
+        return new CustomUserDetailService(userRepository);
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-            DaoAuthenticationProvider daoAuthProvider = new DaoAuthenticationProvider(userDetailsService);
-            daoAuthProvider.setPasswordEncoder(passwordEncoder);
-            return new ProviderManager(daoAuthProvider);
+    public AuthenticationProvider authenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(userDetailsService());
+
+        provider.setPasswordEncoder(passwordEncoder());
+
+        return provider;
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationProvider authenticationProvider
+    ) {
+        return new ProviderManager(authenticationProvider);
+    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration configuration =
-                new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
                 List.of("http://localhost:5173")
@@ -81,6 +111,7 @@ public class SecurityConfig {
                         "GET",
                         "POST",
                         "PUT",
+                        "PATCH",
                         "DELETE",
                         "OPTIONS"
                 )

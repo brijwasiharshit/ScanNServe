@@ -5,12 +5,21 @@ import com.app.ScanNServe.domain.entity.FoodItemEntity;
 import com.app.ScanNServe.domain.repository.IFoodCategoryRepository;
 import com.app.ScanNServe.domain.repository.IFoodItemRepository;
 import com.app.ScanNServe.dto.request.FoodItemRequestDTO;
+import com.app.ScanNServe.dto.request.FoodItemUpdateRequestDTO;
 import com.app.ScanNServe.dto.response.FoodItemResponseDTO;
+import com.app.ScanNServe.dto.response.ItemSearchResponseDTO;
+import com.app.ScanNServe.exception.ResourceNotFoundException;
+import com.app.ScanNServe.exception.ResourseAlreadyExistsException;
 import com.app.ScanNServe.service.IFoodItemService;
 import com.app.ScanNServe.transformer.FoodItemTransformer;
 import com.app.ScanNServe.utils.validations.ValidateProperty;
+import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Data
@@ -21,22 +30,169 @@ public class FoodItemService implements IFoodItemService {
     private final FoodItemTransformer foodItemTransformer;
 
     @Override
-    public FoodItemResponseDTO addFoodItemByCategory(FoodItemRequestDTO foodItemRequestDTO) {
+    @Transactional
+    public FoodItemResponseDTO createFoodItem(
+            FoodItemRequestDTO requestDTO
+    ) {
 
-        if (foodItemRequestDTO.getImgLink() != null) {
-            ValidateProperty.validateLink(foodItemRequestDTO.getImgLink(), "Food item img_link");
+        String normalizedName = requestDTO.getName()
+                .trim()
+                .replaceAll("\\s+", " ");
+
+        FoodCategoryEntity category = foodCategoryRepository
+                .findByCategoryIdAndIsDeletedFalse(requestDTO.getCategoryId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Food category not found."));
+
+        if (foodItemRepository.existsByCategoryAndNameIgnoreCaseAndIsDeletedFalse(
+                category,
+                normalizedName
+        )) {
+
+            throw new ResourseAlreadyExistsException(
+                    "Food item already exists in this category."
+            );
         }
-        // add validation for name of the food Item also.
-        Long categoryId = foodItemRequestDTO.getFoodCategoryIdFk();
 
-        FoodCategoryEntity category = foodCategoryRepository.findById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException("Food category not found with id: " + categoryId));
+        FoodItemEntity entity = foodItemTransformer.toEntity(
+                requestDTO,
+                category,
+                normalizedName
+        );
 
-        FoodItemEntity entity = foodItemTransformer.toEntity(foodItemRequestDTO, category);
+        FoodItemEntity savedEntity = foodItemRepository.save(entity);
 
-        FoodItemEntity saved = foodItemRepository.save(entity);
+        return foodItemTransformer.toDto(savedEntity);
+    }
 
-        return foodItemTransformer.toDto(saved);
+    @Override
+    @Transactional
+    public List<FoodItemResponseDTO> getAllFoodItems() {
+
+        List<FoodItemEntity> foodItems =
+                foodItemRepository.findAllByIsDeletedFalseOrderByCategoryNameAscNameAsc();
+
+        return foodItems.stream()
+                .map(foodItemTransformer::toDto)
+                .toList();
+    }
+    @Override
+    @Transactional
+    public FoodItemResponseDTO getFoodItemById(Long itemId) {
+
+        FoodItemEntity foodItem = foodItemRepository
+                .findByItemIdAndIsDeletedFalse(itemId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Food item not found."));
+
+        return foodItemTransformer.toDto(foodItem);
+    }
+    @Override
+    @Transactional
+    public List<FoodItemResponseDTO> getFoodItemsByCategory(
+            Long categoryId
+    ) {
+
+        FoodCategoryEntity category = foodCategoryRepository
+                .findByCategoryIdAndIsDeletedFalse(categoryId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Food category not found."));
+
+        List<FoodItemEntity> foodItems =
+                foodItemRepository.findAllByCategoryAndIsDeletedFalseOrderByNameAsc(category);
+
+        return foodItems.stream()
+                .map(foodItemTransformer::toDto)
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public FoodItemResponseDTO updateFoodItem(
+            Long itemId,
+            FoodItemUpdateRequestDTO requestDTO
+    ) {
+
+        FoodItemEntity foodItem = foodItemRepository
+                .findByItemIdAndIsDeletedFalse(itemId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Food item not found."));
+
+        if (requestDTO.getName() != null &&
+                !requestDTO.getName().isBlank()) {
+
+            String normalizedName = requestDTO.getName()
+                    .trim()
+                    .replaceAll("\\s+", " ");
+
+            boolean alreadyExists =
+                    foodItemRepository.existsByCategoryAndNameIgnoreCaseAndIsDeletedFalse(
+                            foodItem.getCategory(),
+                            normalizedName
+                    );
+
+            if (alreadyExists &&
+                    !foodItem.getName().equalsIgnoreCase(normalizedName)) {
+
+                throw new ResourseAlreadyExistsException(
+                        "Food item already exists in this category."
+                );
+            }
+
+            foodItem.setName(normalizedName);
+        }
+
+        if (requestDTO.getFoodType() != null) {
+            foodItem.setFoodType(requestDTO.getFoodType());
+        }
+
+        if (requestDTO.getDefaultImage() != null &&
+                !requestDTO.getDefaultImage().isBlank()) {
+
+            foodItem.setDefaultImage(requestDTO.getDefaultImage().trim());
+        }
+
+        FoodItemEntity updated =
+                foodItemRepository.save(foodItem);
+
+        return foodItemTransformer.toDto(updated);
+    }
+
+    @Override
+    @Transactional
+    public void deleteFoodItem(Long itemId) {
+
+        FoodItemEntity foodItem = foodItemRepository
+                .findByItemIdAndIsDeletedFalse(itemId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Food item not found."));
+
+        foodItem.setIsDeleted(true);
+        foodItemRepository.save(foodItem);
+    }
+
+    @Override
+    @Transactional
+    public List<ItemSearchResponseDTO> searchItems(
+            String keyword
+    ) {
+
+        String normalizedKeyword =
+                keyword == null ? "" : keyword.trim();
+
+        if (normalizedKeyword.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        List<FoodItemEntity> items =
+                foodItemRepository
+                        .findTop6ByNameStartingWithIgnoreCaseAndIsDeletedFalse(
+                                normalizedKeyword
+                        );
+
+        return items.stream()
+                .map(foodItemTransformer::toSearchDto)
+                .toList();
     }
 }
 

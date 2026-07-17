@@ -1,21 +1,26 @@
 package com.app.ScanNServe.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import lombok.Data;
+import com.app.ScanNServe.utils.enums.FoodType;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Data
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "food_details")
+@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "food_item")
 public class FoodItemEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_seq")
     @SequenceGenerator(
@@ -23,19 +28,36 @@ public class FoodItemEntity {
             sequenceName = "food_item_seq",
             allocationSize = 50
     )
-    private Long id;
-    @Column(name = "name", length = 100, nullable = false)
-    private String name;
-
-    @Column(name = "img_link", length = 2048)
-    private String imgLink;
-
-    @Column(name = "is_veg", nullable = false)
-    private Boolean isVeg;
+    @Column(name = "item_id")
+    private Long itemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_category_id", nullable = false)
-    private FoodCategoryEntity foodCategory;
+    @JoinColumn(
+            name = "category_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_food_item_category")
+    )
+    private FoodCategoryEntity category;
 
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
+    @Column(name = "food_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
+
+    @Column(name = "default_image", nullable = false, length = 500)
+    private String defaultImage;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Builder.Default
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
 }

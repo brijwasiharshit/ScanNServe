@@ -1,14 +1,17 @@
 package com.app.ScanNServe.domain.entity;
 
 import com.app.ScanNServe.utils.enums.Role;
-
 import jakarta.persistence.*;
 import lombok.Data;
 import org.jspecify.annotations.Nullable;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 @Table(
         name = "user_table",
         uniqueConstraints = {
@@ -39,8 +43,6 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false, length = 20)
     private Role role;
 
-
-
     @Column(name = "address", length = 2048)
     private String address;
 
@@ -49,6 +51,21 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "contact_number", length = 15)
     private String contactNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "restaurant_id",
+            foreignKey = @ForeignKey(name = "fk_user_restaurant")
+    )
+    private RestaurantEntity restaurant;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     // ================= Spring Security =================
 
