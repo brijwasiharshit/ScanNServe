@@ -1,0 +1,11 @@
+.git
+.gradle
+build
+.idea
+.vscode
+*.iml
+
+client/fe-serve/node_modules
+client/fe-serve/build
+
+README.md
