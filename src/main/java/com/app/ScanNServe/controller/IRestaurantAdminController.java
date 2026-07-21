@@ -9,6 +9,7 @@ import com.app.ScanNServe.dto.response.RestaurantResponseDTO;
 import com.app.ScanNServe.dto.response.RestaurantTableResponseDTO;
 import com.app.ScanNServe.utils.api.StandardResponse;
 import jakarta.validation.Valid;
+import com.app.ScanNServe.dto.response.SalesReportResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,5 +40,6 @@ public interface IRestaurantAdminController {
     );
 
     ResponseEntity<StandardResponse<List<RestaurantTableResponseDTO>>> getTables();
-}
 
+    ResponseEntity<StandardResponse<SalesReportResponseDTO>> getSalesReport();
+}

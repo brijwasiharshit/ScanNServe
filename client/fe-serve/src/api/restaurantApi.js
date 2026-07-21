@@ -23,3 +23,6 @@ export const getTables = () =>
 
 export const createTable = (payload) =>
     axiosClient.post("/admin/tables", payload);
+
+export const getSalesReport = () =>
+    axiosClient.get("/admin/sales-report");

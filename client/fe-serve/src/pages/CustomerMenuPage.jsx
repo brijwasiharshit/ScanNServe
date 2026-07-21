@@ -150,9 +150,11 @@ export default function CustomerMenuPage() {
                     removeFromCart={removeFromCart}
                     clearCart={clearCart}
                     getCartTotal={getCartTotal}
-                    theme={restaurant?.theme || '#F97316'}
+                    theme={restaurant?.theme || '#2563EB'}
                     tableNumber={menuData?.table?.tableNumber}
                     phoneNumber={restaurant?.phoneNumber}
+                    restaurantName={restaurant?.name}
+                    tableToken={tableToken}
                 />
             )}
         </div>

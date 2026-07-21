@@ -1,4 +1,5 @@
 import { ArrowLeft, Trash2, CheckSquare, Ticket, Info, ShieldCheck, ChevronRight, ShoppingCart, X } from "lucide-react";
+import { placeOrder } from "../../services/userService";
 
 export default function CartModal({ 
     cart, 
@@ -7,9 +8,11 @@ export default function CartModal({
     removeFromCart,
     clearCart,
     getCartTotal, 
-    theme,
+    theme = '#F97316',
     tableNumber,
-    phoneNumber 
+    phoneNumber,
+    restaurantName,
+    tableToken
 }) {
     const itemTotal = getCartTotal();
     const grandTotal = itemTotal;
@@ -45,6 +48,16 @@ export default function CartModal({
         message += `--------------------\n`;
         message += `*Total: ₹${grandTotal.toFixed(2)}*`;
 
+        // Asynchronously call the backend to place the order in DB
+        const orderItems = cart.map(item => ({
+            restaurantMenuItemId: item.itemId,
+            quantity: item.quantity
+        }));
+        placeOrder(tableToken, orderItems).catch(err => {
+            console.error("Failed to sync order with backend:", err);
+        });
+
+        // Continue to redirect to WhatsApp
         const encodedMessage = encodeURIComponent(message);
         const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
         
@@ -78,7 +91,7 @@ export default function CartModal({
                 </button>
                 
                 <h1 className="text-lg font-serif font-bold text-slate-800 tracking-wide">
-                    Spartans Cafe
+                    {restaurantName || "Restaurant"}
                 </h1>
 
                 <button 

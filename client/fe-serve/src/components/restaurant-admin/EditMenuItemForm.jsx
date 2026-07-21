@@ -27,7 +27,7 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-2">
                 <p className="text-sm text-slate-500 mb-1">Editing Item</p>
-                <h3 className="text-lg font-bold text-[#C2410C]">{initialData?.name || initialData?.itemName || "Menu Item"}</h3>
+                <h3 className="text-lg font-bold text-[#1E40AF]">{initialData?.name || initialData?.itemName || "Menu Item"}</h3>
             </div>
 
             <div>
@@ -41,7 +41,7 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
                     required
                     max="2000"
                     step="0.01"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316]"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                     placeholder="Enter price (max 2000)"
                 />
             </div>
@@ -52,7 +52,7 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
                     id="edit-available"
                     checked={available}
                     onChange={(e) => setAvailable(e.target.checked)}
-                    className="h-5 w-5 text-[#F97316] focus:ring-[#F97316] border-slate-300 rounded"
+                    className="h-5 w-5 text-[#2563EB] focus:ring-[#2563EB] border-slate-300 rounded"
                 />
                 <label htmlFor="edit-available" className="text-base font-medium text-slate-700 cursor-pointer">
                     Available for Order

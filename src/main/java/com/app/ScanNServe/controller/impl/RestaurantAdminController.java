@@ -8,7 +8,9 @@ import com.app.ScanNServe.dto.response.ItemSearchResponseDTO;
 import com.app.ScanNServe.dto.response.RestaurantMenuItemResponseDTO;
 import com.app.ScanNServe.dto.response.RestaurantResponseDTO;
 import com.app.ScanNServe.dto.response.RestaurantTableResponseDTO;
+import com.app.ScanNServe.dto.response.SalesReportResponseDTO;
 import com.app.ScanNServe.service.IFoodItemService;
+import com.app.ScanNServe.service.IOrderService;
 import com.app.ScanNServe.service.IRestaurantMenuService;
 import com.app.ScanNServe.service.IRestaurantService;
 import com.app.ScanNServe.service.IRestaurantTableService;
@@ -31,6 +33,7 @@ public class RestaurantAdminController implements IRestaurantAdminController {
     private final IRestaurantMenuService restaurantMenuService;
     private final IFoodItemService foodItemService;
     private final IRestaurantTableService restaurantTableService;
+    private final IOrderService orderService;
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/restaurant")
     @Override
@@ -221,6 +224,25 @@ public class RestaurantAdminController implements IRestaurantAdminController {
                 StandardResponse.<List<RestaurantTableResponseDTO>>builder()
                         .success(true)
                         .message("Restaurant tables fetched successfully.")
+                        .data(responseDTO)
+                        .errors(null)
+                        .httpStatus(HttpStatus.OK)
+                        .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/sales-report")
+    @Override
+    public ResponseEntity<StandardResponse<SalesReportResponseDTO>> getSalesReport() {
+   
+        SalesReportResponseDTO responseDTO = orderService.getSalesReport();
+
+        StandardResponse<SalesReportResponseDTO> response =
+                StandardResponse.<SalesReportResponseDTO>builder()
+                        .success(true)
+                        .message("Sales report fetched successfully.")
                         .data(responseDTO)
                         .errors(null)
                         .httpStatus(HttpStatus.OK)

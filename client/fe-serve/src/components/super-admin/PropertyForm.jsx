@@ -6,7 +6,7 @@ import * as superAdminApi from "../../api/superAdminApi";
 export default function PropertyForm({ onNext }) {
     const [name, setName] = useState("");
     const [logo, setLogo] = useState("");
-    const [theme, setTheme] = useState("#F97316");
+    const [theme, setTheme] = useState("#2563EB");
     const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -84,7 +84,7 @@ export default function PropertyForm({ onNext }) {
             
             <textarea
                 placeholder="Description"
-                className="mt-3 h-20 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#F97316]"
+                className="mt-3 h-20 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2563EB]"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
@@ -95,7 +95,7 @@ export default function PropertyForm({ onNext }) {
                     type="file" 
                     accept="image/*" 
                     onChange={handleLogoUpload}
-                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#F97316]/10 file:text-[#F97316] hover:file:bg-[#F97316]/20"
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#2563EB]/10 file:text-[#2563EB] hover:file:bg-[#2563EB]/20"
                 />
             </div>
 

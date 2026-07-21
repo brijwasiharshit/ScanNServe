@@ -6,6 +6,7 @@ import SearchBar from "../components/super-admin/SearchBar";
 import MenuList from "../components/restaurant-admin/MenuList";
 import TableList from "../components/restaurant-admin/TableList";
 import RestaurantModals from "../components/restaurant-admin/RestaurantModals";
+import SalesAnalysisModal from "../components/restaurant-admin/SalesAnalysisModal";
 import * as restaurantService from "../services/restaurantService";
 
 export default function RestaurantAdminPage() {
@@ -62,7 +63,7 @@ export default function RestaurantAdminPage() {
 
     if (dashboard.loading) {
         return <div className="min-h-screen bg-[#F8FAFC] flex justify-center items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#F97316]"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2563EB]"></div>
         </div>;
     }
 
@@ -80,6 +81,7 @@ export default function RestaurantAdminPage() {
                 <RestaurantQuickActions
                     onAddTable={() => dashboard.openModal("table")}
                     onAddMenuItem={handleAddMenuItem}
+                    onViewSalesAnalysis={() => dashboard.openModal("salesAnalysis")}
                 />
 
                 <RestaurantDashboardTabs
@@ -113,6 +115,10 @@ export default function RestaurantAdminPage() {
                 initialMenuData={dashboard.currentEditingItem}
                 existingMenu={dashboard.menu}
             />
+
+            {dashboard.activeModal === "salesAnalysis" && (
+                <SalesAnalysisModal onClose={dashboard.closeModal} />
+            )}
         </div>
     );
 }

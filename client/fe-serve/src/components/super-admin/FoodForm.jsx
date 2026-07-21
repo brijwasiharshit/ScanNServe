@@ -56,7 +56,7 @@ export default function FoodForm({ categories, onFoodCreated }) {
             />
             
             <select
-                className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#F97316] bg-white text-slate-700"
+                className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2563EB] bg-white text-slate-700"
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
                 required
@@ -70,7 +70,7 @@ export default function FoodForm({ categories, onFoodCreated }) {
             </select>
 
             <select
-                className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#F97316] bg-white text-slate-700"
+                className="mt-3 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#2563EB] bg-white text-slate-700"
                 value={foodType}
                 onChange={(e) => setFoodType(e.target.value)}
                 required
@@ -85,7 +85,7 @@ export default function FoodForm({ categories, onFoodCreated }) {
                     type="file" 
                     accept="image/*" 
                     onChange={handleImageUpload}
-                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#F97316]/10 file:text-[#F97316] hover:file:bg-[#F97316]/20"
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#2563EB]/10 file:text-[#2563EB] hover:file:bg-[#2563EB]/20"
                 />
             </div>
 

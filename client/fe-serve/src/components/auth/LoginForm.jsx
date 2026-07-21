@@ -46,7 +46,7 @@ export default function LoginForm({
 
                 <button
                     type="button"
-                    className="font-medium text-[#F59E0B]"
+                    className="font-medium text-[#2563EB]"
                 >
                     Forgot Password?
                 </button>

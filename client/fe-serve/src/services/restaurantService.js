@@ -39,3 +39,8 @@ export async function createTable(payload) {
     const response = await restaurantApi.createTable(payload);
     return response.data;
 }
+
+export async function getSalesReport() {
+    const response = await restaurantApi.getSalesReport();
+    return response.data;
+}

@@ -6,7 +6,7 @@ export default function Button({
     ...props
 }) {
     const variants = {
-        primary: "bg-[#F97316] hover:bg-[#C2410C] text-white shadow-lg",
+        primary: "bg-[#2563EB] hover:bg-[#1D4ED8] text-white shadow-lg",
         success: "bg-[#22C55E] hover:bg-green-600 text-white",
         warning: "bg-[#F59E0B] hover:opacity-90 text-white",
         danger: "bg-[#EF4444] hover:bg-red-600 text-white",

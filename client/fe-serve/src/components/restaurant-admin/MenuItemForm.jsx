@@ -78,7 +78,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                     </label>
                     {selectedItemName ? (
                         <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-slate-200">
-                            <span className="font-semibold text-[#C2410C]">{selectedItemName}</span>
+                            <span className="font-semibold text-[#1E40AF]">{selectedItemName}</span>
                             <button 
                                 type="button" 
                                 className="text-xs text-red-500 hover:underline"
@@ -93,7 +93,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                                 type="text"
                                 value={keyword}
                                 onChange={(e) => setKeyword(e.target.value)}
-                                className="w-full rounded-lg border border-slate-200 px-3 py-2 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316]"
+                                className="w-full rounded-lg border border-slate-200 px-3 py-2 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                                 placeholder="Start typing to search..."
                             />
                             {searchResults.length > 0 && (
@@ -135,7 +135,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                     required
                     max="2000"
                     step="0.01"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316]"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                     placeholder="Enter price (max 2000)"
                 />
             </div>
@@ -148,7 +148,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316] bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#F97316] file:text-white hover:file:bg-[#C2410C]"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB] bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#2563EB] file:text-white hover:file:bg-[#1D4ED8]"
                 />
                 <p className="text-xs text-slate-500 mt-1">Optional. Select an image from your device.</p>
                 {customImage && (
@@ -162,7 +162,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                     id="available"
                     checked={available}
                     onChange={(e) => setAvailable(e.target.checked)}
-                    className="h-4 w-4 text-[#F97316] focus:ring-[#F97316] border-slate-300 rounded"
+                    className="h-4 w-4 text-[#2563EB] focus:ring-[#2563EB] border-slate-300 rounded"
                 />
                 <label htmlFor="available" className="text-sm font-medium text-slate-700">
                     Available

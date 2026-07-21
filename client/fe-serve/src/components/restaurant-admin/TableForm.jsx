@@ -20,7 +20,7 @@ export default function TableForm({ onSubmit }) {
                     value={tableNumber}
                     onChange={(e) => setTableNumber(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316]"
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                     placeholder="e.g., 12 or Patio-1"
                 />
             </div>

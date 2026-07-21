@@ -13,7 +13,7 @@ export default function DashboardTabs({ activeTab, onTabChange }) {
                     onClick={() => onTabChange(tab.id)}
                     className={`pb-3 font-medium ${
                         activeTab === tab.id
-                            ? "border-b-2 border-[#F59E0B] text-[#F97316]"
+                            ? "border-b-2 border-[#2563EB] text-[#2563EB]"
                             : "text-slate-500"
                     }`}
                 >

@@ -6,13 +6,13 @@ export default function Header() {
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center gap-3">
-                    <div className="bg-[#F97316] p-2.5 rounded-xl shadow-md">
+                    <div className="bg-[#2563EB] p-2.5 rounded-xl shadow-md">
                         <QrCode className="text-white" size={26} />
                     </div>
 
                     <div>
                         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-                            Scan N Serve
+                            Namaste QR
                         </h1>
 
                         <p className="text-sm text-slate-500">
