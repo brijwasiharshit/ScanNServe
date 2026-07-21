@@ -1,16 +1,190 @@
-# ScanNServe
-This is an application for Hotel and Homestay owners to provide dynamic menu to users
+<div align="center">
+  
+# 🍽️ ScanNServe 
 
-Project Structure
-Annotations -> This is the annotation directory where all the custom annotations 
-required in the project will be stored.
-Controller -> This is the controller to handle request and response.
-Request and response are provided to the user in the form of DTO to support abstraction.
-Domain -> This is the package that will contain two different packages. First one is repository which will contain the functions that will be required to interact with the Database.
-            Second is the Entity package which will be required to define basic entities that will be needed to provide structure of content of tables.
-Dto -> This is the DTO Layer where the format of request and response will be defined.
-Service -> This is the service layer where all the business Logic will be written.
-Transformer -> This is the transformer layer where convertion of Dto to entity and entity to Dto will take place because all after the service layer, resository will work only on entities not in Dto's.
-Utils -> This is the package that will contain all the utility functions that will be required in the project.
-        Inside this project, there will be directory message constant which will store the message constants that will be required throughout the proejct.
-Most directories will have a contract defined using Inteface which will be implemented in the implenetation directory of that particular layer.
+**The Next-Generation QR Menu & Restaurant Management System**
+
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.0-brightgreen.svg?logo=springboot)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-19.2-blue.svg?logo=react)](https://reactjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Ready-blue.svg?logo=postgresql)](https://www.postgresql.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.3.1-38B2AC.svg?logo=tailwind-css)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+*ScanNServe modernizes the dining experience by allowing customers to scan a QR code, view the menu, and place orders directly from their smartphones, all backed by a powerful multi-tenant management dashboard.*
+
+</div>
+
+---
+
+## 📖 Overview
+
+ScanNServe is a scalable, **multi-tenant SaaS application** designed for restaurants. It eliminates the need for physical menus and waitstaff order-taking. The platform is divided into three core experiences:
+1. **Super Admin**: Manages the platform, registers new restaurants, and curates the master food catalog.
+2. **Restaurant Admin**: Manages their specific restaurant's menu, tables, and views live analytics.
+3. **Customer**: Scans a QR code to view a customized menu and place orders in real-time.
+
+---
+
+## ✨ Features
+
+- 🏢 **Multi-Tenant Architecture**: A single deployment supports unlimited restaurants securely.
+- 🍔 **Master Food Catalog**: Global food items that restaurants can easily subscribe to and price locally.
+- 📱 **QR Table Generation**: Secure, tokenized QR codes mapped to physical tables.
+- 🔐 **Role-Based Access Control (RBAC)**: Secure JWT authentication with strict roles (SuperAdmin, RestaurantAdmin, Kitchen).
+- 📊 **Live Analytics Dashboard**: Real-time insights into revenue, popular items, and active orders.
+- 🎨 **Modern UI**: A responsive, fast, and beautiful interface powered by React & TailwindCSS.
+
+---
+
+## 📸 Screenshots
+
+*(Placeholder for Screenshots)*
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x400?text=Dashboard+Screenshot" alt="Dashboard" />
+</div>
+
+---
+
+## 🎥 Demo
+
+*(Placeholder for Demo GIF)*
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- **Java 21**
+- **Spring Boot 4.0.0**
+- **Spring Security & JWT** (Authentication)
+- **Spring Data JPA & Hibernate**
+- **PostgreSQL** (Database)
+- **Lombok** (Boilerplate reduction)
+
+### Frontend
+- **React 19.2**
+- **Vite** (Build Tool)
+- **Tailwind CSS 4.3.1** (Styling)
+- **React Router DOM** (Routing)
+- **Axios** (API Client)
+- **Lucide React** (Icons)
+
+---
+
+## 🏗️ Architecture & Documentation
+
+For an in-depth understanding of the system, please refer to our detailed documentation located in the `docs/` folder:
+
+- 🏛️ [**System Architecture**](./docs/ARCHITECTURE.md): High-level system design and workflows.
+- 🗄️ [**Database Schema**](./docs/DATABASE.md): ER Diagram and entity explanations.
+- 🔌 [**API Documentation**](./docs/API.md): Comprehensive REST API endpoints guide.
+- ⚙️ [**Feature Documentation**](./docs/FEATURES.md): Deep dive into specific features and code implementation.
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Java 21+
+- Node.js 20+
+- PostgreSQL
+
+### 1. Database Setup
+1. Create a PostgreSQL database named `scannserve`.
+2. The schema will be automatically generated by Hibernate on startup.
+
+### 2. Backend Setup
+1. Open the project root.
+2. Configure your database credentials in `src/main/resources/application.properties` (or set environment variables):
+   ```properties
+   SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/scannserve
+   SPRING_DATASOURCE_USERNAME=your_username
+   SPRING_DATASOURCE_PASSWORD=your_password
+   ```
+3. Run the application using Gradle:
+   ```bash
+   ./gradlew bootRun
+   ```
+   The backend will start on `http://localhost:8080`.
+
+### 3. Frontend Setup
+1. Navigate to the frontend directory:
+   ```bash
+   cd client/fe-serve
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend will be accessible at `http://localhost:5173`.
+
+---
+
+## 🌍 Environment Variables
+
+Ensure the following environment variables are set for production deployments:
+
+| Variable | Description |
+|----------|-------------|
+| `SPRING_DATASOURCE_URL` | JDBC URL for PostgreSQL |
+| `SPRING_DATASOURCE_USERNAME`| Database Username |
+| `SPRING_DATASOURCE_PASSWORD`| Database Password |
+
+---
+
+## 📂 Folder Structure
+
+```text
+ScanNServe/
+├── client/fe-serve/        # React Frontend Application
+│   ├── src/components/     # Reusable UI Components
+│   └── src/pages/          # Application Routes/Views
+├── docs/                   # Extensive Technical Documentation
+├── src/main/java/          # Spring Boot Backend Application
+│   ├── controller/         # REST API Endpoints
+│   ├── domain/             # JPA Entities & Repositories
+│   ├── dto/                # Data Transfer Objects
+│   └── service/            # Business Logic
+└── build.gradle            # Gradle Build Configuration
+```
+
+---
+
+## 🚢 Deployment
+
+### Docker (Recommended)
+A `Dockerfile` is included for containerizing the backend.
+```bash
+docker build -t scannserve-backend .
+docker run -p 8080:8080 -e SPRING_DATASOURCE_URL=... scannserve-backend
+```
+
+For the frontend, build the production bundle:
+```bash
+cd client/fe-serve
+npm run build
+```
+Serve the `dist/` folder using Nginx or Vercel.
+
+---
+
+## 🔮 Future Features
+- WebSocket integration for real-time Kitchen Order Tickets (KOT).
+- Stripe Payment Gateway integration for seamless checkout.
+- Multi-language support for customer menus.
+- Advanced AI-driven analytics for restaurant owners.
+
+---
+
+## 🤝 Contributing
+Contributions are welcome! Please follow the standard fork-and-pull-request workflow. Ensure you include appropriate tests and update documentation for any new features.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
