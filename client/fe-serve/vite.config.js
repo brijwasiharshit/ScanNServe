@@ -9,4 +9,16 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] }), tailwindcss()
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://scannserve-3eqs.onrender.com',
+        changeOrigin: true,
+        secure: false,
+        headers: {
+          'Origin': 'https://scannserve-3eqs.onrender.com'
+        }
+      },
+    },
+  },
 })

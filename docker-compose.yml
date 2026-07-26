@@ -9,7 +9,7 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - DB_URL=jdbc:mysql://db:3306/scannserve
+      - DB_URL=jdbc:mysql://db:3306/namasteQR
       - DB_USER=root
       - DB_PASSWORD=root
     depends_on:
@@ -32,7 +32,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=scannserve
+      - MYSQL_DATABASE=namasteQR
     volumes:
       - db_data:/var/lib/mysql
 
