@@ -4,6 +4,7 @@ import com.app.namasteqr.utils.enums.FoodType;
 import lombok.*;
 
 import java.math.BigDecimal;
+import com.app.namasteqr.utils.enums.ItemTag;
 
 @Getter
 @Setter
@@ -25,4 +26,6 @@ public class CustomerMenuItemDTO {
     private BigDecimal price;
 
     private String image;
+
+    private ItemTag tag;
 }

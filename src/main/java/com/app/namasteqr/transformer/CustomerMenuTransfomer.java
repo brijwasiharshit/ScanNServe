@@ -59,6 +59,7 @@ public class CustomerMenuTransfomer {
                                                                 ? item.getCustomImage()
                                                                 : item.getFoodItem().getDefaultImage()
                                                 )
+                                                .tag(item.getTag())
                                                 .build()
 
                                 )

@@ -8,7 +8,9 @@
     import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
     import java.math.BigDecimal;
+    import java.math.BigDecimal;
     import java.time.LocalDateTime;
+    import com.app.namasteqr.utils.enums.ItemTag;
 
     @Getter
     @Setter
@@ -64,6 +66,10 @@
         @Builder.Default
         @Column(name = "available", nullable = false)
         private Boolean available = true;
+
+        @Enumerated(EnumType.STRING)
+        @Column(name = "tag")
+        private ItemTag tag;
 
         @CreatedDate
         @Column(name = "created_at", nullable = false, updatable = false)

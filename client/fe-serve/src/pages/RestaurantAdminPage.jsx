@@ -30,7 +30,7 @@ export default function RestaurantAdminPage() {
                 await restaurantService.updateMenuItem(dashboard.currentEditingItem.itemId, data);
             } else {
                 // Subscribe new
-                await restaurantService.subscribeItem({ itemId: data.itemId, price: data.price, customImage: data.customImage, available: data.available });
+                await restaurantService.subscribeItem({ itemId: data.itemId, price: data.price, customImage: data.customImage, available: data.available, tag: data.tag });
             }
             dashboard.closeModal();
             dashboard.refreshData();

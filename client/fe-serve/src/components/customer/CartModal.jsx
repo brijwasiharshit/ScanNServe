@@ -71,7 +71,7 @@ export default function CartModal({
                     <button onClick={onClose} className="p-2 border border-slate-200 rounded-lg shadow-sm active:scale-95">
                         <ArrowLeft size={20} className="text-slate-700" />
                     </button>
-                    <h1 className="text-lg font-serif font-bold text-slate-800">Spartans Cafe</h1>
+                    <h1 className="text-lg font-serif font-bold text-slate-800">{restaurantName || "Restaurant"}</h1>
                     <div className="w-10"></div>
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center p-5 text-slate-500">
@@ -140,9 +140,21 @@ export default function CartModal({
                             {/* Item Details */}
                             <div className="flex-1 min-w-0 pr-6">
                                 <h4 className="font-bold text-slate-800 text-sm leading-tight mb-1 truncate">{item.name}</h4>
-                                {item.foodType && (
-                                    <div className="flex items-center gap-1 mb-2">
-                                        <div className={`w-2.5 h-2.5 rounded-full ${item.foodType === 'VEG' ? 'bg-[#3F7C48]' : 'bg-[#C93C3C]'}`}></div>
+                                { (item.foodType || item.tag) && (
+                                    <div className="flex items-center gap-2 mb-2 mt-1">
+                                        {item.foodType && (
+                                            <div className={`w-2.5 h-2.5 rounded-full shadow-sm ${item.foodType === 'VEG' ? 'bg-[#3F7C48]' : 'bg-[#C93C3C]'}`}></div>
+                                        )}
+                                        {item.tag && (
+                                            <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-sm shadow-sm text-white uppercase tracking-wide inline-flex items-center gap-0.5
+                                                ${item.tag === 'BESTSELLER' ? 'bg-[#F59E0B]' : 
+                                                  item.tag === 'HIGH_PROTEIN' ? 'bg-[#3B82F6]' : 
+                                                  item.tag === 'BUDGET_PICK' ? 'bg-[#10B981]' : 
+                                                  item.tag === 'QUICK_BITE' ? 'bg-[#F43F5E]' : 'bg-slate-600'}`
+                                            }>
+                                                {item.tag.replace('_', ' ')}
+                                            </span>
+                                        )}
                                     </div>
                                 )}
                                 <p className="font-bold text-slate-800 text-sm">₹{(item.price * item.quantity).toFixed(2)}</p>

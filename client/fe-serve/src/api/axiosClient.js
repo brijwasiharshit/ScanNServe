@@ -3,7 +3,7 @@ import { getAccessToken } from "../utils/tokenStorage";
 
 //returns an axios instance with methods such as get(),post(),put(),delete()
 const axiosClient = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || "https://scannserve-3eqs.onrender.com/api/v1",
+    baseURL: import.meta.env.VITE_API_BASE_URL || "/api/v1",
     withCredentials: true
 });
 

@@ -29,16 +29,32 @@ export default function CustomerMenu({ menuData, categories, theme, addToCart, u
         return selectedCategory === 'All' ? true : item.categoryName === selectedCategory;
     });
 
-    const categoryIconMap = {
-        'All': <div className="grid grid-cols-2 gap-[2px] w-4 h-4"><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div></div>,
-        'Breakfast': '🍞',
-        'Chinese': '🍜',
-        'Veg Main Course': '🥗',
-        'Non Veg Main Course': '🍗',
-        'Tandoori': '🍢',
-        'Beverages': '🍹',
-        'Desserts': '🍦',
-        'Starters': '🥟'
+    const getCategoryIcon = (category) => {
+        if (category === 'All') return <div className="grid grid-cols-2 gap-[2px] w-4 h-4"><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div><div className="border border-slate-500 rounded-sm"></div></div>;
+        
+        const cat = category.toLowerCase();
+        if (cat.includes('south')) return '🫓';
+        if (cat.includes('north') || cat.includes('indian')) return '🥘';
+        if (cat.includes('breakfast')) return '🥞';
+        if (cat.includes('chinese')) return '🍜';
+        if (cat.includes('veg main')) return '🥗';
+        if (cat.includes('non veg') || cat.includes('chicken') || cat.includes('meat')) return '🍗';
+        if (cat.includes('tandoor')) return '🍢';
+        if (cat.includes('beverage') || cat.includes('drink') || cat.includes('mocktail') || cat.includes('cocktail')) return '🍹';
+        if (cat.includes('shake') || cat.includes('smoothie')) return '🥤';
+        if (cat.includes('dessert') || cat.includes('sweet') || cat.includes('ice cream')) return '🍦';
+        if (cat.includes('starter') || cat.includes('snack')) return '🥟';
+        if (cat.includes('pizza') || cat.includes('italian')) return '🍕';
+        if (cat.includes('burger') || cat.includes('fast food')) return '🍔';
+        if (cat.includes('mexican')) return '🌮';
+        if (cat.includes('sushi') || cat.includes('japanese')) return '🍣';
+        if (cat.includes('seafood') || cat.includes('fish')) return '🐟';
+        if (cat.includes('soup')) return '🍲';
+        if (cat.includes('bread') || cat.includes('roti') || cat.includes('naan')) return '🫓';
+        if (cat.includes('rice') || cat.includes('biryani')) return '🍚';
+        
+        // Default fallback icon
+        return '🍽️';
     };
 
     // Make sure 'All' is at the front
@@ -88,7 +104,7 @@ export default function CustomerMenu({ menuData, categories, theme, addToCart, u
                             <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl transition-all ${
                                 isSelected ? 'bg-white border-2 border-slate-200 shadow-sm' : 'bg-white border border-slate-100 shadow-sm'
                             }`}>
-                                {categoryIconMap[category] || '🍽️'}
+                                {getCategoryIcon(category)}
                             </div>
                             <span className={`text-[10px] font-semibold whitespace-nowrap px-1 pb-1 border-b-2 transition-colors ${
                                 isSelected ? 'text-slate-900 border-[#4A7B4F]' : 'text-slate-600 border-transparent'
@@ -131,18 +147,35 @@ export default function CustomerMenu({ menuData, categories, theme, addToCart, u
                                 </div>
                             )}
 
-                            {/* Top-Left Badge (Bestseller or Veg) */}
-                            <div className={`absolute top-2 left-2 z-10 ${item.image ? '' : 'relative top-0 left-0 mt-3 ml-3 mb-1 self-start'}`}>
-                                {index % 3 === 0 ? (
-                                    <div className="bg-[#2D6A35] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm flex items-center gap-0.5 shadow-sm uppercase tracking-wide inline-flex">
-                                        <Star size={8} fill="currentColor" /> Bestseller
-                                    </div>
-                                ) : item.foodType ? (
-                                    <div className={`text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm flex items-center gap-0.5 shadow-sm uppercase tracking-wide inline-flex ${item.foodType === 'VEG' ? 'bg-[#2D6A35]' : 'bg-[#C93C3C]'}`}>
-                                        {item.foodType === 'VEG' ? <Leaf size={8} /> : <div className="w-1.5 h-1.5 bg-white rounded-full"></div>} 
-                                        {item.foodType}
-                                    </div>
-                                ) : null}
+                            {/* Badges Container */}
+                            <div className={`absolute top-2 w-full px-2 flex justify-between items-start pointer-events-none z-10 ${item.image ? '' : 'relative top-0 mt-3 self-start'}`}>
+                                {/* Left Custom Tag */}
+                                <div className="flex-1">
+                                    {item.tag && (
+                                        <div className={`text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm flex items-center gap-0.5 shadow-sm uppercase tracking-wide inline-flex 
+                                            ${item.tag === 'BESTSELLER' ? 'bg-[#F59E0B]' : 
+                                              item.tag === 'HIGH_PROTEIN' ? 'bg-[#3B82F6]' : 
+                                              item.tag === 'BUDGET_PICK' ? 'bg-[#10B981]' : 
+                                              item.tag === 'QUICK_BITE' ? 'bg-[#F43F5E]' : 'bg-slate-600'}`
+                                        }>
+                                            {item.tag === 'BESTSELLER' ? <Star size={8} fill="currentColor" /> : 
+                                             item.tag === 'HIGH_PROTEIN' ? '💪' : 
+                                             item.tag === 'BUDGET_PICK' ? '💰' : 
+                                             item.tag === 'QUICK_BITE' ? '⚡' : ''} 
+                                            {item.tag.replace('_', ' ')}
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                {/* Right Veg/Non-Veg Tag */}
+                                <div className="flex-shrink-0 ml-1">
+                                    {item.foodType && (
+                                        <div className={`text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm flex items-center gap-0.5 shadow-sm uppercase tracking-wide inline-flex ${item.foodType === 'VEG' ? 'bg-[#2D6A35]' : 'bg-[#C93C3C]'}`}>
+                                            {item.foodType === 'VEG' ? <Leaf size={8} /> : <div className="w-1.5 h-1.5 bg-white rounded-full"></div>} 
+                                            {item.foodType}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Item Details */}

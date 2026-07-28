@@ -4,6 +4,7 @@ import Button from "../common/Button";
 export default function EditMenuItemForm({ initialData, onSubmit }) {
     const [price, setPrice] = useState(initialData?.price || "");
     const [available, setAvailable] = useState(initialData?.available ?? true);
+    const [selectedTag, setSelectedTag] = useState(initialData?.tag || "");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,7 +20,8 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
             price: parsedPrice, 
             // Blocking image editing right now, passing original if it exists
             customImage: initialData.customImage || initialData.image || null, 
-            available 
+            available,
+            tag: selectedTag || null
         });
     };
 
@@ -44,6 +46,23 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
                     className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                     placeholder="Enter price (max 2000)"
                 />
+            </div>
+
+            <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                    Tag
+                </label>
+                <select
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB] bg-white"
+                >
+                    <option value="">No tag</option>
+                    <option value="BESTSELLER">Bestseller</option>
+                    <option value="HIGH_PROTEIN">High Protein</option>
+                    <option value="BUDGET_PICK">Budget Pick</option>
+                    <option value="QUICK_BITE">Quick Bite</option>
+                </select>
             </div>
 
             <div className="flex items-center gap-2 mt-2 p-2 border border-slate-200 rounded-lg bg-white">

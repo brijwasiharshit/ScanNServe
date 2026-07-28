@@ -7,6 +7,7 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
     const [price, setPrice] = useState(initialData?.price || "");
     const [customImage, setCustomImage] = useState(initialData?.image || initialData?.customImage || "");
     const [available, setAvailable] = useState(initialData?.available ?? true);
+    const [selectedTag, setSelectedTag] = useState(initialData?.tag || "");
     
     // Quick search logic
     const [keyword, setKeyword] = useState("");
@@ -65,7 +66,8 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
             itemId: parseInt(itemId, 10), 
             price: parsedPrice, 
             customImage, 
-            available 
+            available,
+            tag: selectedTag || null
         });
     };
 
@@ -154,6 +156,24 @@ export default function MenuItemForm({ initialData, onSubmit, existingMenu = [] 
                 {customImage && (
                     <img src={customImage} alt="Preview" className="mt-2 w-16 h-16 object-cover rounded-lg border border-slate-200" />
                 )}
+            </div>
+
+            <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                    Tag
+                </label>
+                <select
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB] bg-white"
+                >
+                    <option value="">No tag</option>
+                    <option value="BESTSELLER">Bestseller</option>
+                    <option value="HIGH_PROTEIN">High Protein</option>
+                    <option value="BUDGET_PICK">Budget Pick</option>
+                    <option value="QUICK_BITE">Quick Bite</option>
+                </select>
+                <p className="text-xs text-slate-500 mt-1">Optional. Select a highlight tag for this item.</p>
             </div>
 
             <div className="flex items-center gap-2 mt-2">

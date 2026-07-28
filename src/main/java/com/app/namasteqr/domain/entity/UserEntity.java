@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Table(
         name = "user_table",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email_address")
         }
 )

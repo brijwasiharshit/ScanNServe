@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import com.app.namasteqr.utils.enums.ItemTag;
 
 @Getter
 @Setter
@@ -29,6 +30,8 @@ public class RestaurantMenuItemResponseDTO {
     private String image;
 
     private Boolean available;
+
+    private ItemTag tag;
 
     private LocalDateTime createdAt;
 }

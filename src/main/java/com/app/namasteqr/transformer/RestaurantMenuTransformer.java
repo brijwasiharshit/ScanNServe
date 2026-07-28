@@ -7,6 +7,7 @@ import com.app.namasteqr.dto.request.RestaurantMenuItemRequestDTO;
 import com.app.namasteqr.dto.request.UpdateRestaurantMenuItemRequestDTO;
 import com.app.namasteqr.dto.response.RestaurantMenuItemResponseDTO;
 import org.springframework.stereotype.Component;
+import java.util.ArrayList;
 
 @Component
 public class RestaurantMenuTransformer {
@@ -22,6 +23,7 @@ public class RestaurantMenuTransformer {
                 .price(dto.getPrice())
                 .customImage(dto.getCustomImage())
                 .available(dto.getAvailable())
+                .tag(dto.getTag())
                 .build();
     }
     public RestaurantMenuItemResponseDTO toDto(
@@ -42,6 +44,7 @@ public class RestaurantMenuTransformer {
                                 : entity.getFoodItem().getDefaultImage()
                 )
                 .available(entity.getAvailable())
+                .tag(entity.getTag())
                 .createdAt(entity.getCreatedAt())
                 .build();
     }
@@ -61,6 +64,10 @@ public class RestaurantMenuTransformer {
 
         if (dto.getAvailable() != null) {
             entity.setAvailable(dto.getAvailable());
+        }
+
+        if (dto.getTag() != null) {
+            entity.setTag(dto.getTag());
         }
     }
 

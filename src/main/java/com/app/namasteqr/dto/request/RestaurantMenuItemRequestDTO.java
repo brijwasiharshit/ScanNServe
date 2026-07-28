@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
+import com.app.namasteqr.utils.enums.ItemTag;
 
 @Getter
 @Setter
@@ -24,4 +25,6 @@ public class RestaurantMenuItemRequestDTO {
 
     @Builder.Default
     private Boolean available = true;
+
+    private ItemTag tag;
 }

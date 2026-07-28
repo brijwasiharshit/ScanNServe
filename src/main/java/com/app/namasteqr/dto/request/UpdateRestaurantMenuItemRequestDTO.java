@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
+import com.app.namasteqr.utils.enums.ItemTag;
 
 @Getter
 @Setter
@@ -18,4 +19,6 @@ public class UpdateRestaurantMenuItemRequestDTO {
     private String customImage;
 
     private Boolean available;
+
+    private ItemTag tag;
 }
