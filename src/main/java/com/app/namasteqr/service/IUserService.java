@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 public interface IUserService {
 
     AdminResponseDTO createAdmin(AdminRequestDTO requestDTO);
-
+    java.util.List<AdminResponseDTO> getAllAdmins();
 }

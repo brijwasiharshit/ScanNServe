@@ -26,6 +26,11 @@ export default function useSuperAdminDashboard() {
                 if (catRes.data?.data) {
                     setCategories(catRes.data.data);
                 }
+
+                const adminRes = await superAdminApi.getAdmins();
+                if (adminRes.data?.data) {
+                    setAdminList(adminRes.data.data);
+                }
             } catch (err) {
                 console.error("Failed to fetch super admin data", err);
             }
@@ -35,9 +40,13 @@ export default function useSuperAdminDashboard() {
     }, []);
 
     const admins = useMemo(() => {
-        // Fallback to empty array if no real admin list fetching API is available yet
-        return adminList.filter((admin) =>
-            `${admin.username} ${admin.emailAddress}`
+        return adminList.map(admin => ({
+            id: admin.userId,
+            property: admin.restaurantName || "No Property",
+            email: admin.emailAddress,
+            status: "Active"
+        })).filter((admin) =>
+            `${admin.property} ${admin.email}`
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase())
         );
@@ -68,15 +77,59 @@ export default function useSuperAdminDashboard() {
         setActiveModal("admin");
     };
 
-    const handleFoodCreated = (newFood) => {
-        setFoodList((prev) => [...prev, newFood]);
+    const handleFoodCreated = async () => {
+        const res = await superAdminApi.getGlobalFoodItems();
+        if (res.data?.data) {
+            setFoodList(res.data.data);
+        }
         closeModal();
+    };
+
+    const handleCategoryCreated = async () => {
+        const catRes = await superAdminApi.getFoodCategories();
+        if (catRes.data?.data) {
+            setCategories(catRes.data.data);
+        }
+        closeModal();
+    };
+
+    const handleCsvUpload = async (file) => {
+        try {
+            await superAdminApi.uploadGlobalFoodItemsCsv(file);
+            alert("CSV uploaded successfully!");
+            handleFoodCreated(); // refresh list
+        } catch (error) {
+            alert(error.response?.data?.message || "Failed to upload CSV. Please ensure categories exist and data is valid.");
+        }
     };
 
     const handleAdminCreated = (newAdmin) => {
         setAdminList((prev) => [...prev, newAdmin]);
         closeModal();
     };
+
+    const dynamicStats = [
+        {
+            id: "admins",
+            label: "Total Admins",
+            value: adminList.length,
+        },
+        {
+            id: "properties",
+            label: "Properties",
+            value: adminList.filter((v,i,a)=>a.findIndex(t=>(t.restaurantId === v.restaurantId))===i).length || 0, // Approx properties from admins if we don't fetch all properties
+        },
+        {
+            id: "food",
+            label: "Food Items",
+            value: foodList.length,
+        },
+        {
+            id: "categories",
+            label: "Total Categories",
+            value: categories.length,
+        }
+    ];
 
     return {
         activeTab,
@@ -86,13 +139,15 @@ export default function useSuperAdminDashboard() {
         activeModal,
         openModal,
         closeModal,
-        stats: dashboardStats,
+        stats: dynamicStats,
         admins,
         foods,
         categories,
         createdRestaurantId,
         handlePropertyCreated,
         handleFoodCreated,
-        handleAdminCreated
+        handleAdminCreated,
+        handleCategoryCreated,
+        handleCsvUpload
     };
 }

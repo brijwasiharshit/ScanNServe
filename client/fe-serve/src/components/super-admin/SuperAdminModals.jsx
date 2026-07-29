@@ -2,6 +2,7 @@ import Modal from "../common/Modal";
 import AdminForm from "./AdminForm";
 import FoodForm from "./FoodForm";
 import PropertyForm from "./PropertyForm";
+import CategoryForm from "./CategoryForm";
 
 export default function SuperAdminModals({
     activeModal,
@@ -10,7 +11,8 @@ export default function SuperAdminModals({
     createdRestaurantId,
     onAdminCreated,
     categories,
-    onFoodCreated
+    onFoodCreated,
+    onCategoryCreated
 }) {
     if (activeModal === "property") {
         return (
@@ -38,6 +40,14 @@ export default function SuperAdminModals({
                     categories={categories}
                     onFoodCreated={onFoodCreated}
                 />
+            </Modal>
+        );
+    }
+
+    if (activeModal === "category") {
+        return (
+            <Modal title="Add Category" onClose={onClose}>
+                <CategoryForm onCategoryCreated={onCategoryCreated} />
             </Modal>
         );
     }

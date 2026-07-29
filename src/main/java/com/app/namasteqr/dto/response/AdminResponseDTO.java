@@ -20,5 +20,6 @@ public class AdminResponseDTO {
     private String contactNumber;
     private String address;
     private Long restaurantId;
+    private String restaurantName;
     private LocalDateTime createdAt;
 }

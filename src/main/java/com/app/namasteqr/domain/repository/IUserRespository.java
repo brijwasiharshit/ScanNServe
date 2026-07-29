@@ -17,4 +17,6 @@ public interface IUserRespository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findFirstByUsername(String username);
 
     Optional<UserEntity> findFirstByRole(com.app.namasteqr.utils.enums.Role role);
+    
+    java.util.List<UserEntity> findAllByRole(com.app.namasteqr.utils.enums.Role role);
 }

@@ -11,10 +11,11 @@ public interface IFoodItemService {
 
     FoodItemResponseDTO createFoodItem(FoodItemRequestDTO requestDTO);
     List<FoodItemResponseDTO> getAllFoodItems();
+
+    List<FoodItemResponseDTO> uploadBulkFoodItems(org.springframework.web.multipart.MultipartFile file);
     FoodItemResponseDTO getFoodItemById(Long itemId);
     List<FoodItemResponseDTO> getFoodItemsByCategory(Long categoryId);
     FoodItemResponseDTO updateFoodItem(Long itemId, FoodItemUpdateRequestDTO requestDTO);
     void deleteFoodItem(Long itemId);
     List<ItemSearchResponseDTO> searchItems(String keyword);
 }
-

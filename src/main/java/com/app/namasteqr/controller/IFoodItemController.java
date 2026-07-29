@@ -42,7 +42,9 @@ public interface IFoodItemController {
             @Valid @RequestBody FoodItemRequestDTO requestDTO
     );
 
-    public ResponseEntity<StandardResponse<List<FoodItemResponseDTO>>> getAllFoodItems();
+    public    ResponseEntity<StandardResponse<List<FoodItemResponseDTO>>> getAllFoodItems();
+
+    ResponseEntity<StandardResponse<List<FoodItemResponseDTO>>> uploadBulkFoodItems(org.springframework.web.multipart.MultipartFile file);
 
     public ResponseEntity<StandardResponse<FoodItemResponseDTO>> getFoodItemById(
             @PathVariable Long itemId

@@ -13,8 +13,9 @@ import lombok.*;
 
 public class FoodItemRequestDTO {
 
-    @NotNull(message = "Category Id is required")
     private Long categoryId;
+
+    private String categoryName;
 
     @NotBlank(message = "Item name is required")
     private String name;

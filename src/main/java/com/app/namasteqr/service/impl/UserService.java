@@ -66,4 +66,12 @@ public class UserService  implements IUserService {
 
         return userTransformer.toDto(saved);
     }
+
+    @Override
+    public java.util.List<AdminResponseDTO> getAllAdmins() {
+        return userRepository.findAllByRole(Role.ADMIN)
+                .stream()
+                .map(userTransformer::toDto)
+                .collect(java.util.stream.Collectors.toList());
+    }
 }

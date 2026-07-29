@@ -1,4 +1,4 @@
-import { Building2, UtensilsCrossed, Users, LayoutGrid, FileText } from "lucide-react";
+import { Building2, UtensilsCrossed, Users, LayoutGrid, FileText, Folder } from "lucide-react";
 
 const statIcons = {
     admins: Users,
@@ -6,6 +6,7 @@ const statIcons = {
     food: UtensilsCrossed,
     tables: LayoutGrid,
     menu: FileText,
+    categories: Folder,
 };
 
 export default function StatCard({ stat }) {

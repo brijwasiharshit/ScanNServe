@@ -8,4 +8,5 @@ public interface IRestaurantService {
             RestaurantRequestDTO requestDTO
     );
     RestaurantResponseDTO getRestaurant();
+    java.util.List<RestaurantResponseDTO> getAllRestaurants();
 }

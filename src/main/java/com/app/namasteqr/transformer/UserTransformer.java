@@ -41,7 +41,8 @@ public class UserTransformer {
                 .emailAddress(entity.getEmailAddress())
                 .contactNumber(entity.getContactNumber())
                 .address(entity.getAddress())
-                .restaurantId(entity.getRestaurant().getRestaurantId())
+                .restaurantId(entity.getRestaurant() != null ? entity.getRestaurant().getRestaurantId() : null)
+                .restaurantName(entity.getRestaurant() != null ? entity.getRestaurant().getName() : null)
                 .createdAt(entity.getCreatedAt())
                 .build();
     }

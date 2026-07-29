@@ -18,6 +18,8 @@ export default function SuperAdminPage() {
                 <QuickActions
                     onCreateProperty={() => dashboard.openModal("property")}
                     onAddFood={() => dashboard.openModal("food")}
+                    onAddCategory={() => dashboard.openModal("category")}
+                    onUploadCsv={dashboard.handleCsvUpload}
                 />
 
                 <DashboardTabs
@@ -47,6 +49,7 @@ export default function SuperAdminPage() {
                 onAdminCreated={dashboard.handleAdminCreated}
                 categories={dashboard.categories}
                 onFoodCreated={dashboard.handleFoodCreated}
+                onCategoryCreated={dashboard.handleCategoryCreated}
             />
         </div>
     );

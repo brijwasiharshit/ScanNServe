@@ -78,7 +78,31 @@ public class SuperAdminController implements ISuperAdminController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/restaurants")
+    @Override
+    public ResponseEntity<StandardResponse<List<RestaurantResponseDTO>>> getRestaurants() {
+        List<RestaurantResponseDTO> data = restaurantService.getAllRestaurants();
+        StandardResponse<List<RestaurantResponseDTO>> response = StandardResponse.<List<RestaurantResponseDTO>>builder()
+                .success(true)
+                .message("Restaurants fetched successfully")
+                .data(data)
+                .httpStatus(HttpStatus.OK)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 
-
-
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @GetMapping("/admins")
+    @Override
+    public ResponseEntity<StandardResponse<List<AdminResponseDTO>>> getAdmins() {
+        List<AdminResponseDTO> data = userService.getAllAdmins();
+        StandardResponse<List<AdminResponseDTO>> response = StandardResponse.<List<AdminResponseDTO>>builder()
+                .success(true)
+                .message("Admins fetched successfully")
+                .data(data)
+                .httpStatus(HttpStatus.OK)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

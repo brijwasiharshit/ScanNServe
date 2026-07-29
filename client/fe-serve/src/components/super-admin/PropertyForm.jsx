@@ -41,7 +41,7 @@ export default function PropertyForm({ onNext }) {
                 address,
                 description,
                 phoneNumber,
-                subscriptionExpiry: expiry.toISOString()
+                subscriptionExpiry: expiry.toISOString().split('Z')[0]
             };
 
             const response = await superAdminApi.createRestaurant(payload);

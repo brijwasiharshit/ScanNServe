@@ -80,4 +80,12 @@ public class RestaurantService implements IRestaurantService {
 
         return restaurantTransformer.toDto(restaurant);
     }
+
+    @Override
+    public java.util.List<RestaurantResponseDTO> getAllRestaurants() {
+        return restaurantRepository.findAllByIsDeletedFalseOrderByNameAsc()
+                .stream()
+                .map(restaurantTransformer::toDto)
+                .collect(java.util.stream.Collectors.toList());
+    }
 }

@@ -16,9 +16,28 @@ export const createGlobalFoodItem = (foodData) => {
     return axiosClient.post("/items", foodData);
 };
 
+export const uploadGlobalFoodItemsCsv = (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return axiosClient.post("/items/bulk", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    });
+};
+
 export const getFoodCategories = () => {
     return axiosClient.get("/categories");
 };
 
-// Also we need to get restaurants/admins to list them, but we'll use existing ones if they exist.
-// Assuming backend doesn't have a get admins route for super admin yet, we'll keep the UI mocked or wait.
+export const createCategory = (categoryData) => {
+    return axiosClient.post("/categories", categoryData);
+};
+
+export const getRestaurants = () => {
+    return axiosClient.get("/super/restaurants");
+};
+
+export const getAdmins = () => {
+    return axiosClient.get("/super/admins");
+};

@@ -11,6 +11,7 @@ public interface IFoodCategoryRepository extends JpaRepository<FoodCategoryEntit
     boolean existsByNameIgnoreCase(String name);
     List<FoodCategoryEntity> findAllByIsDeletedFalseOrderByNameAsc();
     Optional<FoodCategoryEntity> findByCategoryIdAndIsDeletedFalse(Long categoryId);
+    Optional<FoodCategoryEntity> findByNameIgnoreCaseAndIsDeletedFalse(String name);
 
 }
 

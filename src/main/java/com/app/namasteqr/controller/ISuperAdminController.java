@@ -32,5 +32,7 @@ public interface ISuperAdminController {
     );
 
 
+    ResponseEntity<StandardResponse<List<RestaurantResponseDTO>>> getRestaurants();
 
+    ResponseEntity<StandardResponse<List<AdminResponseDTO>>> getAdmins();
 }

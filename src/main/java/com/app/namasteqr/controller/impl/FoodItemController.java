@@ -258,5 +258,23 @@ public class FoodItemController implements IFoodItemController {
 
 
 
-}
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PostMapping("/items/bulk")
+    @Override
+    public ResponseEntity<StandardResponse<List<FoodItemResponseDTO>>> uploadBulkFoodItems(
+            @RequestParam("file") org.springframework.web.multipart.MultipartFile file
+    ) {
+        List<FoodItemResponseDTO> responseDTOs = foodItemService.uploadBulkFoodItems(file);
 
+        StandardResponse<List<FoodItemResponseDTO>> response =
+                StandardResponse.<List<FoodItemResponseDTO>>builder()
+                        .success(true)
+                        .message("Bulk food items uploaded successfully")
+                        .data(responseDTOs)
+                        .errors(null)
+                        .httpStatus(HttpStatus.CREATED)
+                        .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+}

@@ -18,5 +18,6 @@ public interface IRestaurantRepository
     Optional<RestaurantEntity> findByRestaurantIdAndIsDeletedFalse(
             Long restaurantId
     );
+    java.util.List<RestaurantEntity> findAllByIsDeletedFalseOrderByNameAsc();
 
 }
