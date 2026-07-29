@@ -61,15 +61,33 @@ public class RestaurantMenuService implements IRestaurantMenuService {
                                         "Food item not found."
                                 ));
 
-        if (restaurantMenuRepository
-                .existsByRestaurantAndFoodItemAndIsDeletedFalse(
-                        restaurant,
-                        foodItem
-                )) {
+        java.util.Optional<RestaurantMenuItemEntity> existingOpt =
+                restaurantMenuRepository.findByRestaurantAndFoodItem(restaurant, foodItem);
 
-            throw new ResourseAlreadyExistsException(
-                    "Item already exists in restaurant menu."
-            );
+        if (existingOpt.isPresent()) {
+            RestaurantMenuItemEntity existing = existingOpt.get();
+            if (!existing.getIsDeleted()) {
+                throw new ResourseAlreadyExistsException(
+                        "Item already exists in restaurant menu."
+                );
+            } else {
+                // Restore soft-deleted item and update its fields
+                existing.setIsDeleted(false);
+                existing.setPrice(requestDTO.getPrice());
+                
+                if (requestDTO.getCustomImage() != null) {
+                    existing.setCustomImage(requestDTO.getCustomImage().trim());
+                }
+                
+                if (requestDTO.getAvailable() != null) {
+                    existing.setAvailable(requestDTO.getAvailable());
+                }
+                
+                existing.setTag(requestDTO.getTag());
+                
+                RestaurantMenuItemEntity saved = restaurantMenuRepository.save(existing);
+                return restaurantMenuTransformer.toDto(saved);
+            }
         }
 
         RestaurantMenuItemEntity entity =

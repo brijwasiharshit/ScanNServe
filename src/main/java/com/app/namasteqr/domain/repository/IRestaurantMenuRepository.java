@@ -13,6 +13,11 @@ public interface IRestaurantMenuRepository extends JpaRepository<RestaurantMenuI
             RestaurantEntity restaurant,
             FoodItemEntity foodItem
     );
+
+    Optional<RestaurantMenuItemEntity> findByRestaurantAndFoodItem(
+            RestaurantEntity restaurant,
+            FoodItemEntity foodItem
+    );
     List<RestaurantMenuItemEntity> findAllByRestaurantAndIsDeletedFalseOrderByCreatedAtAsc(
             RestaurantEntity restaurant
     );
