@@ -19,7 +19,7 @@ public interface IRestaurantMenuRepository extends JpaRepository<RestaurantMenuI
             RestaurantEntity restaurant,
             FoodItemEntity foodItem
     );
-    @EntityGraph(attributePaths = {"foodItem", "foodItem.category"})
+    @EntityGraph(attributePaths = {"restaurant", "foodItem", "foodItem.category"})
     List<RestaurantMenuItemEntity> findAllByRestaurantAndIsDeletedFalseOrderByCreatedAtAscRestaurantMenuItemIdAsc(
             RestaurantEntity restaurant
     );
@@ -30,7 +30,7 @@ public interface IRestaurantMenuRepository extends JpaRepository<RestaurantMenuI
             Long itemId
     );
     
-    @EntityGraph(attributePaths = {"foodItem", "foodItem.category"})
+    @EntityGraph(attributePaths = {"restaurant", "foodItem", "foodItem.category"})
     List<RestaurantMenuItemEntity>
     findAllByRestaurantAndAvailableTrueAndIsDeletedFalseOrderByCreatedAtAscRestaurantMenuItemIdAsc(
             RestaurantEntity restaurant

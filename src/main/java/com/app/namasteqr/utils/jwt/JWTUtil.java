@@ -22,7 +22,7 @@ public class JWTUtil {
    private final IRefreshTokenRepository refreshTokenRepository;
     private static final String SECRET_KEY = "my-super-secure-secret-key-my-super-secure-secret-key";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60*3;
-    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000* 60 * 15;
+    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 24;
     private static final long REFRESH_TOKEN_EXPIRATION_DAYS_30 = 30;
     private static final long REFRESH_TOKEN_EXPIRATION_DAYS_1 = 1;
 
