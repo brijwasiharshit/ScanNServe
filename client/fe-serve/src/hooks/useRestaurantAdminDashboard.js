@@ -18,8 +18,31 @@ export default function useRestaurantAdminDashboard() {
                 restaurantService.getMenu(),
                 restaurantService.getTables()
             ]);
-            setRestaurant(restaurantRes.data);
-            setMenu(menuRes.data || []);
+            const sortedMenu = (menuRes.data || []).sort((a, b) => {
+                const nameA = (a.itemName || a.name || "").toLowerCase();
+                const nameB = (b.itemName || b.name || "").toLowerCase();
+                
+                // Pin Veg Parcel to the top
+                if (nameA.includes("veg parcel") && !nameB.includes("veg parcel")) return -1;
+                if (!nameA.includes("veg parcel") && nameB.includes("veg parcel")) return 1;
+                
+                // Sort by Category Name
+                const catA = (a.categoryName || a.category || "").toLowerCase();
+                const catB = (b.categoryName || b.category || "").toLowerCase();
+                if (catA !== catB) {
+                    return catA.localeCompare(catB);
+                }
+                
+                // Sort by Price Ascending
+                if (a.price !== b.price) {
+                    return a.price - b.price;
+                }
+                
+                // Stable fallback
+                return a.itemId - b.itemId;
+            });
+            setMenu(sortedMenu);
+            
             setTables(tablesRes.data || []);
         } catch (error) {
             console.error("Failed to load restaurant dashboard data:", error);
@@ -35,7 +58,7 @@ export default function useRestaurantAdminDashboard() {
     const filteredMenu = useMemo(
         () =>
             menu.filter((item) =>
-                `${item.name} ${item.category}`
+                `${item.itemName || item.name || ""} ${item.categoryName || item.category || ""}`
                     .toLowerCase()
                     .includes(searchTerm.toLowerCase())
             ),

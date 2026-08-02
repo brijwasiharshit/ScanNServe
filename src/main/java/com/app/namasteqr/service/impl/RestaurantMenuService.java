@@ -122,7 +122,7 @@ public class RestaurantMenuService implements IRestaurantMenuService {
 
         List<RestaurantMenuItemEntity> menuItems =
                 restaurantMenuRepository
-                        .findAllByRestaurantAndIsDeletedFalseOrderByCreatedAtAsc(
+                        .findAllByRestaurantAndIsDeletedFalseOrderByCreatedAtAscRestaurantMenuItemIdAsc(
                                 restaurant
                         );
 

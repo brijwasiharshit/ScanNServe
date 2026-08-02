@@ -1,6 +1,7 @@
 const tabs = [
     { id: "menu", label: "Menu Items" },
     { id: "tables", label: "Tables" },
+    { id: "pos", label: "POS" },
 ];
 
 export default function RestaurantDashboardTabs({ activeTab, onTabChange }) {

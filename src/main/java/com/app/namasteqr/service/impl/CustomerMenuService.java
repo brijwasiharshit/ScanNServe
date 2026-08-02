@@ -50,7 +50,7 @@ public class CustomerMenuService implements ICustomerMenuService {
 
         List<RestaurantMenuItemEntity> menuItems =
                 restaurantMenuRepository
-                        .findAllByRestaurantAndAvailableTrueAndIsDeletedFalseOrderByCreatedAtAsc(
+                        .findAllByRestaurantAndAvailableTrueAndIsDeletedFalseOrderByCreatedAtAscRestaurantMenuItemIdAsc(
                                 restaurant
                         );
         System.out.println(menuItems.size());

@@ -49,28 +49,29 @@ export default function CartModal({
         message += `*Time:* ${currentDate}\n\n`;
         
         message += "```\n";
-        message += "Item             Qty     Total\n";
-        message += "------------------------------\n";
+        message += "Item          Qty   Total\n";
+        message += "-------------------------\n";
         
         cart.forEach(item => {
-            let name = item.name;
-            if (name.length > 15) {
-                name = name.substring(0, 13) + "..";
+            let name = item.itemName || item.name;
+            if (name.length > 13) {
+                name = name.substring(0, 11) + "..";
             }
-            name = name.padEnd(16, ' ');
+            name = name.padEnd(13, ' ');
             const qty = String(item.quantity).padStart(3, ' ');
-            const total = String((item.price * item.quantity).toFixed(2)).padStart(9, ' ');
+            const total = String((item.price * item.quantity).toFixed(2)).padStart(8, ' ');
             message += `${name} ${qty} ${total}\n`;
         });
         
-        message += "------------------------------\n";
-        const totalStr = "Total".padEnd(16, ' ');
+        message += "-------------------------\n";
+        
+        const totalStr = "Total".padEnd(13, ' ');
         const totalItemsStr = String(cart.reduce((sum, item) => sum + item.quantity, 0)).padStart(3, ' ');
-        const grandTotalStr = String(grandTotal.toFixed(2)).padStart(9, ' ');
+        const grandTotalStr = String(grandTotal.toFixed(2)).padStart(8, ' ');
         message += `${totalStr} ${totalItemsStr} ${grandTotalStr}\n`;
         message += "```\n\n";
         
-        message += `_Thank you for ordering!_`;
+        message += `_Thank you for ordering with us!_`;
 
         // Asynchronously call the backend to place the order in DB
         const orderItems = cart.map(item => ({
@@ -81,15 +82,16 @@ export default function CartModal({
             console.error("Failed to sync order with backend:", err);
         });
 
-        // Continue to redirect to WhatsApp
+        // Calculate URL before clearing
         const encodedMessage = encodeURIComponent(message);
         const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
 
-        window.open(waUrl, "_blank");
-        
-        // Clear cart and close modal
+        // Clear cart and close modal first to ensure state updates
         clearCart();
         onClose();
+        
+        // Redirect to WhatsApp
+        window.open(waUrl, "_blank");
     };
 
     if (cart.length === 0) {

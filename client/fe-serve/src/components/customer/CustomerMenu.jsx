@@ -83,9 +83,6 @@ export default function CustomerMenu({ menuData, categories, theme, addToCart, u
                                 className="w-full pl-11 pr-4 py-3 bg-white border border-slate-100 rounded-full outline-none shadow-sm text-sm focus:border-[#4A7B4F]"
                             />
                         </div>
-                        <button className="w-12 h-12 flex-shrink-0 bg-[#4A7B4F] text-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform">
-                            <SlidersHorizontal size={18} />
-                        </button>
                     </div>
                 </div>
                 

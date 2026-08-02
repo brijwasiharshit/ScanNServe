@@ -36,15 +36,13 @@ export default function CustomerMenuPage() {
         <div className="min-h-screen bg-[#FAFAFA] pb-6 font-sans">
             {/* Top Navigation Bar */}
             <div className="bg-[#FAFAFA] px-4 py-3 flex items-center justify-between sticky top-0 z-30">
-                {/* Hamburger Menu */}
-                <button className="p-1">
-                    <Menu size={24} className="text-slate-800" />
-                </button>
+                {/* Spacer for centering */}
+                <div className="w-8"></div>
                 
                 {/* Centered Restaurant Name / Logo */}
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="text-xl font-serif font-bold text-slate-800 tracking-wide text-center">
-                        {restaurant?.name || "Spartans Cafe"}
+                        {menuData?.restaurant?.name || "Spartans Cafe"}
                     </h1>
                 </div>
 
@@ -150,10 +148,10 @@ export default function CustomerMenuPage() {
                     removeFromCart={removeFromCart}
                     clearCart={clearCart}
                     getCartTotal={getCartTotal}
-                    theme={restaurant?.theme || '#2563EB'}
+                    theme={menuData?.restaurant?.theme || '#2563EB'}
                     tableNumber={menuData?.table?.tableNumber}
-                    phoneNumber={restaurant?.phoneNumber}
-                    restaurantName={restaurant?.name}
+                    phoneNumber={menuData?.restaurant?.phoneNumber}
+                    restaurantName={menuData?.restaurant?.name}
                     tableToken={tableToken}
                 />
             )}

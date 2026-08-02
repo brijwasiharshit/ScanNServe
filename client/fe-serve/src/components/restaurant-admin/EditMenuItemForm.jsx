@@ -5,6 +5,7 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
     const [price, setPrice] = useState(initialData?.price || "");
     const [available, setAvailable] = useState(initialData?.available ?? true);
     const [selectedTag, setSelectedTag] = useState(initialData?.tag || "");
+    const [customImage, setCustomImage] = useState(initialData?.customImage || initialData?.image || "");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,11 +19,25 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
         onSubmit({ 
             itemId: initialData.itemId, 
             price: parsedPrice, 
-            // Blocking image editing right now, passing original if it exists
-            customImage: initialData.customImage || initialData.image || null, 
+            customImage: customImage || null, 
             available,
             tag: selectedTag || null
         });
+    };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Please choose an image smaller than 2MB");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setCustomImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
@@ -46,6 +61,35 @@ export default function EditMenuItemForm({ initialData, onSubmit }) {
                     className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
                     placeholder="Enter price (max 2000)"
                 />
+            </div>
+
+            <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                    Image (URL or Upload)
+                </label>
+                <div className="flex flex-col gap-3">
+                    <input
+                        type="url"
+                        value={customImage}
+                        onChange={(e) => setCustomImage(e.target.value)}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-3 focus:border-[#2563EB] focus:outline-none focus:ring-1 focus:ring-[#2563EB]"
+                        placeholder="Enter image URL"
+                    />
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs font-bold text-slate-400 uppercase">OR</span>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                    </div>
+                    {customImage && (
+                        <div className="mt-2">
+                            <img src={customImage} alt="Preview" className="w-24 h-24 object-cover rounded-xl border border-slate-200 shadow-sm" />
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div>

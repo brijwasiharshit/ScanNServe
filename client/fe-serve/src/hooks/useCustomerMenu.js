@@ -13,6 +13,31 @@ export default function useCustomerMenu(tableToken) {
             setLoading(true);
             try {
                 const response = await userService.getMenuByTableToken(tableToken);
+                
+                if (response.data && response.data.menu) {
+                    response.data.menu.sort((a, b) => {
+                        const nameA = (a.name || "").toLowerCase();
+                        const nameB = (b.name || "").toLowerCase();
+                        
+                        if (nameA.includes("veg parcel") && !nameB.includes("veg parcel")) return -1;
+                        if (!nameA.includes("veg parcel") && nameB.includes("veg parcel")) return 1;
+                        // Sort by Category Name
+                        const catA = (a.categoryName || a.category || "").toLowerCase();
+                        const catB = (b.categoryName || b.category || "").toLowerCase();
+                        if (catA !== catB) {
+                            return catA.localeCompare(catB);
+                        }
+                        
+                        // Sort by Price Ascending
+                        if (a.price !== b.price) {
+                            return a.price - b.price;
+                        }
+                        
+                        // Stable fallback
+                        return a.itemId - b.itemId;
+                    });
+                }
+                
                 setMenuData(response.data);
                 setError(null);
             } catch (err) {

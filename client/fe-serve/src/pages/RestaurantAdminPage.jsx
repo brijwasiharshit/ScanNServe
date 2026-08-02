@@ -7,6 +7,7 @@ import MenuList from "../components/restaurant-admin/MenuList";
 import TableList from "../components/restaurant-admin/TableList";
 import RestaurantModals from "../components/restaurant-admin/RestaurantModals";
 import SalesAnalysisModal from "../components/restaurant-admin/SalesAnalysisModal";
+import POSView from "../components/restaurant-admin/POSView";
 import * as restaurantService from "../services/restaurantService";
 
 export default function RestaurantAdminPage() {
@@ -104,6 +105,13 @@ export default function RestaurantAdminPage() {
 
                 {dashboard.activeTab === "tables" && (
                     <TableList tables={dashboard.tables} />
+                )}
+
+                {dashboard.activeTab === "pos" && (
+                    <POSView 
+                        menu={dashboard.menu} 
+                        restaurant={dashboard.restaurant} 
+                    />
                 )}
             </div>
 
