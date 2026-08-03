@@ -139,9 +139,9 @@ export default function POSView({ menu = [], restaurant }) {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 mt-6 h-[calc(100vh-250px)] min-h-[500px]">
+        <div className="flex flex-col lg:flex-row gap-6 mt-6 h-auto lg:h-[calc(100vh-250px)] lg:min-h-[500px]">
             {/* Left Side: Menu Grid */}
-            <div className="flex-1 flex flex-col min-h-0 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="flex-1 flex flex-col min-h-[500px] lg:min-h-0 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 {/* Category Filter */}
                 <div className="p-4 border-b border-slate-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
                     <div className="flex gap-2">
@@ -204,7 +204,7 @@ export default function POSView({ menu = [], restaurant }) {
             </div>
 
             {/* Right Side: Cart */}
-            <div className="w-full lg:w-[420px] flex flex-col bg-[#FAFAFA] rounded-2xl border border-slate-200 shadow-sm flex-shrink-0 overflow-hidden font-sans relative">
+            <div className="w-full lg:w-[420px] flex flex-col bg-[#FAFAFA] rounded-2xl border border-slate-200 shadow-sm flex-shrink-0 overflow-hidden font-sans relative min-h-[400px] lg:min-h-0">
                 {/* Cart Header */}
                 <div className="p-4 border-b border-slate-200 bg-white flex justify-between items-center shadow-sm z-10 relative">
                     <h2 className="text-lg font-serif font-bold text-slate-800 tracking-wide">POS Order</h2>

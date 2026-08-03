@@ -43,7 +43,8 @@ export default function useRestaurantAdminDashboard() {
             });
             setMenu(sortedMenu);
             
-            setTables(tablesRes.data || []);
+            setTables(tablesRes.data || tablesRes || []);
+            setRestaurant(restaurantRes.data || restaurantRes.restaurant || restaurantRes || null);
         } catch (error) {
             console.error("Failed to load restaurant dashboard data:", error);
         } finally {
